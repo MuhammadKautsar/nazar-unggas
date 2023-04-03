@@ -2,7 +2,7 @@
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Nazar Unggas</b> Admin System | Version 1.6
+          <b>Nazar Unggas</b> Management System
         </div>
         <strong>Copyright &copy; 2023 <a href="<?php echo base_url(); ?>">Nazar Unggas</a>.</strong> All rights reserved.
     </footer>

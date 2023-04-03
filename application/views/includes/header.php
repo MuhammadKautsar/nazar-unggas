@@ -42,7 +42,7 @@
         <!-- Logo -->
         <a href="<?php echo base_url(); ?>" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>CI</b>AS</span>
+          <span class="logo-mini"><b>N</b>U</span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><b>Nazar</b>Unggas</span>
         </a>
@@ -54,14 +54,6 @@
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <li class="dropdown tasks-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                  <i class="fa fa-history"></i>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header"> Last Login : <i class="fa fa-clock-o"></i> <?= empty($last_login) ? "First Time Login" : $last_login; ?></li>
-                </ul>
-              </li>
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -100,44 +92,22 @@
         <section class="sidebar">
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
+            <?php
+            if($is_admin == 1)
+            {
+            ?>
+            <li class="header text-center">ADMIN</li>
+            <?php
+            } else {
+            ?>
+            <li class="header text-center">MANAGER</li>
+            <?php
+            }
+            ?>
             <li>
               <a href="<?php echo base_url(); ?>dashboard">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
               </a>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-share"></i> <span>Multilevel</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level One
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                    <li class="treeview">
-                      <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-              </ul>
             </li>
             <?php
             if($is_admin == 1)
@@ -145,14 +115,14 @@
             ?>
             <li>
               <a href="<?php echo base_url(); ?>userListing">
-                <i class="fa fa-users"></i>
-                <span>Users</span>
+                <i class="fa fa-user"></i>
+                <span>Manajer</span>
               </a>
             </li>
             <li>
               <a href="<?php echo base_url(); ?>roles/roleListing">
-                <i class="fa fa-user-circle-o " aria-hidden="true"></i>
-                <span>Roles</span>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <span>Periode</span>
               </a>
             </li>
             <?php
@@ -166,8 +136,8 @@
               ?>
             <li>
               <a href="<?php echo base_url(); ?>booking">
-                <i class="fa fa-anchor"></i>
-                <span>Booking</span>
+                <i class="fa fa-file-text"></i>
+                <span>Laporan</span>
               </a>
             </li>
               <?php
@@ -182,7 +152,38 @@
             <li>
               <a href="<?php echo base_url(); ?>task">
                 <i class="fa fa-tasks"></i>
-                <span>Tasks</span>
+                <span>Dokumentasi</span>
+              </a>
+            </li>
+            <?php
+            }
+            ?>
+            <?php
+            if($is_admin != 1)
+            {
+            ?>
+            <li>
+              <a href="<?php echo base_url(); ?>userListing">
+                <i class="fa fa-file-text"></i>
+                <span>Data Harian</span>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo base_url(); ?>roles/roleListing">
+                <i class="fa fa-money "></i>
+                <span>Biaya Operasional</span>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo base_url(); ?>booking">
+                <i class="fa fa-tasks"></i>
+                <span>Dokumentasi</span>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo base_url(); ?>task">
+                <i class="fa fa-print"></i>
+                <span>Cetak Laporan</span>
               </a>
             </li>
             <?php
