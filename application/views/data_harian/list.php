@@ -2,15 +2,15 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Task Management
-        <small>Add, Edit, Delete</small>
+        <i class="fa fa-file-text"></i> Data Harian
+        <small>Tambah, Ubah, Hapus</small>
       </h1>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>task/add"><i class="fa fa-plus"></i> Add New task</a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>periode/add"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
             </div>
         </div>
@@ -49,9 +49,9 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">task List</h3>
+                    <h3 class="box-title">List Data Harian</h3>
                     <div class="box-tools">
-                        <form action="<?php echo base_url() ?>task/taskListing" method="POST" id="searchList">
+                        <form action="<?php echo base_url() ?>periode/periodeListing" method="POST" id="searchList">
                             <div class="input-group">
                               <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
                               <div class="input-group-btn">
@@ -64,10 +64,16 @@
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
-                        <th>Task Title</th>
-                        <th>Description</th>
-                        <th>Created On</th>
-                        <th class="text-center">Actions</th>
+                        <th>No</th>
+                        <th>Minggu ke</th>
+                        <th>Tanggal</th>
+                        <th>Umur</th>
+                        <th>Ayam mati</th>
+                        <th>Ayam afkir</th>
+                        <th>Pakan (sak)</th>
+                        <th>Berat ayam</th>
+                        <th>Periode</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                     <?php
                     if(!empty($records))
@@ -76,12 +82,18 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo $record->taskTitle ?></td>
-                        <td><?php echo $record->description ?></td>
-                        <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
+                        <td><?php echo $record->iddata ?></td>
+                        <td><?php echo $record->minggu_ke ?></td>
+                        <td><?php echo $record->tanggal ?></td>
+                        <td><?php echo $record->umur ?></td>
+                        <td><?php echo $record->ayam_mati ?></td>
+                        <td><?php echo $record->afkir ?></td>
+                        <td><?php echo $record->pakan ?></td>
+                        <td><?php echo $record->berat_ayam ?></td>
+                        <td><?php echo $record->periode_id ?></td>
                         <td class="text-center">
-                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'task/edit/'.$record->taskId; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-sm btn-danger deletetask" href="#" data-taskid="<?php echo $record->taskId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                            <!-- <a class="btn btn-sm btn-info" href="<?php echo base_url().'periode/edit/'.$record->idperiode; ?>" title="Edit"><i class="fa fa-pencil"></i></a> -->
+                            <!-- <a class="btn btn-sm btn-danger deleteBooking" href="#" data-bookingid="<?php echo $record->idperiode; ?>" title="Delete"><i class="fa fa-trash"></i></a> -->
                         </td>
                     </tr>
                     <?php
@@ -106,7 +118,7 @@
             e.preventDefault();            
             var link = jQuery(this).get(0).href;            
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "task/taskListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "booking/bookingListing/" + value);
             jQuery("#searchList").submit();
         });
     });

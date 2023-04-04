@@ -1,12 +1,5 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * Class : Login (LoginController)
- * Login class to control to authenticate user credentials and starts user's session.
- * @author : Kishor Mali
- * @version : 1.1
- * @since : 15 November 2016
- */
 class Login extends CI_Controller
 {
     /**
@@ -69,15 +62,15 @@ class Login extends CI_Controller
             
             if (!empty($result))
             {
-                if ($result->isAdmin != SYSTEM_ADMIN && ($result->roleStatus == 2 || $result->isRoleDeleted == 1))
-                {
-                    $this->session->set_flashdata('error', 'The user doesn\'t have any role or the role is deactivated');
-                    redirect('login');
-                }
+                // if ($result->isAdmin != SYSTEM_ADMIN && ($result->roleStatus == 2 || $result->isRoleDeleted == 1))
+                // {
+                //     $this->session->set_flashdata('error', 'The user doesn\'t have any role or the role is deactivated');
+                //     redirect('login');
+                // }
 
-                $lastLogin = $this->login_model->lastLoginInfo($result->userId);
+                // $lastLogin = $this->login_model->lastLoginInfo($result->userId);
 
-                $accessInfo = $this->accessInfo($result->roleId);
+                // $accessInfo = $this->accessInfo($result->roleId);
 
                 $sessionArray = array('userId'=>$result->userId,
                                         'role'=>$result->roleId,
@@ -91,11 +84,11 @@ class Login extends CI_Controller
 
                 $this->session->set_userdata($sessionArray);
 
-                unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin'], $sessionArray['accessInfo']);
+                // unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin'], $sessionArray['accessInfo']);
 
-                $loginInfo = array("userId"=>$result->userId, "sessionData" => json_encode($sessionArray), "machineIp"=>$_SERVER['REMOTE_ADDR'], "userAgent"=>getBrowserAgent(), "agentString"=>$this->agent->agent_string(), "platform"=>$this->agent->platform());
+                // $loginInfo = array("userId"=>$result->userId, "sessionData" => json_encode($sessionArray), "machineIp"=>$_SERVER['REMOTE_ADDR'], "userAgent"=>getBrowserAgent(), "agentString"=>$this->agent->agent_string(), "platform"=>$this->agent->platform());
 
-                $this->login_model->lastLogin($loginInfo);
+                // $this->login_model->lastLogin($loginInfo);
                 
                 redirect('/dashboard');
             }
@@ -262,21 +255,6 @@ class Login extends CI_Controller
 
             redirect("/login");
         }
-    }
-
-    private function accessInfo($roleId)
-    {
-        $finalMatrixArray = [];
-        $matrix = $this->login_model->getRoleAccessMatrix($roleId);
-        
-        if(!empty($matrix)) {
-            $accessMatrix = json_decode($matrix->access);
-            foreach($accessMatrix as $moduleMatrix) {
-                $finalMatrixArray[$moduleMatrix->module] = (array) $moduleMatrix;
-            }
-        }
-        
-        return $finalMatrixArray;
     }
 }
 

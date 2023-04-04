@@ -26,12 +26,12 @@ class Periode extends BaseController
     
     function periodeListing()
     {
-        if(!$this->hasListAccess())
-        {
-            $this->loadThis();
-        }
-        else
-        {
+        // if(!$this->hasListAccess())
+        // {
+        //     $this->loadThis();
+        // }
+        // else
+        // {
             $searchText = '';
             if(!empty($this->input->post('searchText'))) {
                 $searchText = $this->security->xss_clean($this->input->post('searchText'));
@@ -51,7 +51,7 @@ class Periode extends BaseController
             $this->global['pageTitle'] = 'Nazar Unggas : Periode';
             
             $this->loadViews("periode/list", $this->global, $data, NULL);
-        }
+        // }
     }
 
     /**

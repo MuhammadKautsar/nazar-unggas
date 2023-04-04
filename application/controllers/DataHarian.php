@@ -2,7 +2,7 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
-class Dokumentasi extends BaseController
+class DataHarian extends BaseController
 {
     /**
      * This is default constructor of the class
@@ -10,9 +10,9 @@ class Dokumentasi extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Dokumentasi_model', 'dm');
+        $this->load->model('DataHarian_model', 'dhm');
         $this->isLoggedIn();
-        $this->module = 'Dokumentasi';
+        $this->module = 'DataHarian';
     }
 
     /**
@@ -21,10 +21,10 @@ class Dokumentasi extends BaseController
      */
     public function index()
     {
-        redirect('dokumentasi/dokumentasiListing');
+        redirect('dataHarian/dataHarianListing');
     }
     
-    function dokumentasiListing()
+    function dataHarianListing()
     {
         // if(!$this->hasListAccess())
         // {
@@ -42,16 +42,16 @@ class Dokumentasi extends BaseController
             
             // $count = $this->pm->bookingListingCount($searchText);
 
-			// $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
+			// $returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
 
-            $returns = $this->paginationCompress ( "dokumentasiListing/", 10 );
+            $returns = $this->paginationCompress ( "dataHarianListing/", 10 );
             
-            $data['records'] = $this->dm->dokumentasiListing($searchText, $returns["page"], $returns["segment"]);
+            $data['records'] = $this->dhm->dataHarianListing($searchText, $returns["page"], $returns["segment"]);
             
-            $this->global['pageTitle'] = 'Nazar Unggas : Dokumentasi';
+            $this->global['pageTitle'] = 'Nazar Unggas : Periode';
             
-            $this->loadViews("dokumentasi/list", $this->global, $data, NULL);
-        //}
+            $this->loadViews("data_harian/list", $this->global, $data, NULL);
+        // }
     }
 
     /**

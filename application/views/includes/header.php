@@ -145,13 +145,13 @@
             {
             ?>
             <li>
-              <a href="<?php echo base_url(); ?>userListing">
+              <a href="<?php echo base_url(); ?>dataHarian">
                 <i class="fa fa-file-text"></i>
                 <span>Data Harian</span>
               </a>
             </li>
             <li>
-              <a href="<?php echo base_url(); ?>roles/roleListing">
+              <a href="<?php echo base_url(); ?>biayaOperasional">
                 <i class="fa fa-money "></i>
                 <span>Biaya Operasional</span>
               </a>
@@ -163,7 +163,7 @@
               </a>
             </li>
             <li>
-              <a href="<?php echo base_url(); ?>task">
+              <a href="<?php echo base_url(); ?>cetakLaporan">
                 <i class="fa fa-print"></i>
                 <span>Cetak Laporan</span>
               </a>

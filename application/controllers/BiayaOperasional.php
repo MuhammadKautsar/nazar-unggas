@@ -2,7 +2,7 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
-class Dokumentasi extends BaseController
+class BiayaOperasional extends BaseController
 {
     /**
      * This is default constructor of the class
@@ -10,9 +10,9 @@ class Dokumentasi extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Dokumentasi_model', 'dm');
+        $this->load->model('BiayaOperasional_model', 'bom');
         $this->isLoggedIn();
-        $this->module = 'Dokumentasi';
+        $this->module = 'BiayaOperasional';
     }
 
     /**
@@ -21,10 +21,10 @@ class Dokumentasi extends BaseController
      */
     public function index()
     {
-        redirect('dokumentasi/dokumentasiListing');
+        redirect('biayaOperasional/biayaOperasionalListing');
     }
     
-    function dokumentasiListing()
+    function biayaOperasionalListing()
     {
         // if(!$this->hasListAccess())
         // {
@@ -42,16 +42,16 @@ class Dokumentasi extends BaseController
             
             // $count = $this->pm->bookingListingCount($searchText);
 
-			// $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
+			// $returns = $this->paginationCompress ( "biayaOperasionalListing/", $count, 10 );
 
-            $returns = $this->paginationCompress ( "dokumentasiListing/", 10 );
+            $returns = $this->paginationCompress ( "biayaOperasionalListing/", 10 );
             
-            $data['records'] = $this->dm->dokumentasiListing($searchText, $returns["page"], $returns["segment"]);
+            $data['records'] = $this->bom->biayaOperasionalListing($searchText, $returns["page"], $returns["segment"]);
             
-            $this->global['pageTitle'] = 'Nazar Unggas : Dokumentasi';
+            $this->global['pageTitle'] = 'Nazar Unggas : Periode';
             
-            $this->loadViews("dokumentasi/list", $this->global, $data, NULL);
-        //}
+            $this->loadViews("biaya_operasional/list", $this->global, $data, NULL);
+        // }
     }
 
     /**

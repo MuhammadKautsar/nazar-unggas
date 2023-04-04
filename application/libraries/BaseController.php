@@ -65,58 +65,58 @@ class BaseController extends CI_Controller {
 	/**
 	 * This function is used to check the user having list access or not
 	 */
-	protected function hasListAccess() {
-		if ($this->isAdmin() ||
-			(array_key_exists($this->module, $this->accessInfo) 
-			&& ($this->accessInfo[$this->module]['list'] == 1 
-			|| $this->accessInfo[$this->module]['total_access'] == 1)))
-		{
-			return true;
-		}
-		return false;
-	}
+	// protected function hasListAccess() {
+	// 	if ($this->isAdmin() ||
+	// 		(array_key_exists($this->module, $this->accessInfo) 
+	// 		&& ($this->accessInfo[$this->module]['list'] == 1 
+	// 		|| $this->accessInfo[$this->module]['total_access'] == 1)))
+	// 	{
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
 	/**
 	 * This function is used to check the user having create access or not
 	 */
-	protected function hasCreateAccess() {
-		if ($this->isAdmin() ||
-			(array_key_exists($this->module, $this->accessInfo) 
-			&& ($this->accessInfo[$this->module]['create_records'] == 1 
-			|| $this->accessInfo[$this->module]['total_access'] == 1)))
-		{
-			return true;
-		}
-		return false;
-	}
+	// protected function hasCreateAccess() {
+	// 	if ($this->isAdmin() ||
+	// 		(array_key_exists($this->module, $this->accessInfo) 
+	// 		&& ($this->accessInfo[$this->module]['create_records'] == 1 
+	// 		|| $this->accessInfo[$this->module]['total_access'] == 1)))
+	// 	{
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
 	/**
 	 * This function is used to check the user having update access or not
 	 */
-	protected function hasUpdateAccess() {
-		if ($this->isAdmin() ||
-			(array_key_exists($this->module, $this->accessInfo) 
-			&& ($this->accessInfo[$this->module]['edit_records'] == 1 
-			|| $this->accessInfo[$this->module]['total_access'] == 1)))
-		{
-			return true;
-		}
-		return false;
-	}
+	// protected function hasUpdateAccess() {
+	// 	if ($this->isAdmin() ||
+	// 		(array_key_exists($this->module, $this->accessInfo) 
+	// 		&& ($this->accessInfo[$this->module]['edit_records'] == 1 
+	// 		|| $this->accessInfo[$this->module]['total_access'] == 1)))
+	// 	{
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
 	/**
 	 * This function is used to check the user having delete access or not
 	 */
-	protected function hasDeleteAccess() {
-		if ($this->isAdmin() ||
-			(array_key_exists($this->module, $this->accessInfo) 
-			&& ($this->accessInfo[$this->module]['delete_records'] == 1 
-			|| $this->accessInfo[$this->module]['total_access'] == 1)))
-		{
-			return true;
-		}
-		return false;
-	}
+	// protected function hasDeleteAccess() {
+	// 	if ($this->isAdmin() ||
+	// 		(array_key_exists($this->module, $this->accessInfo) 
+	// 		&& ($this->accessInfo[$this->module]['delete_records'] == 1 
+	// 		|| $this->accessInfo[$this->module]['total_access'] == 1)))
+	// 	{
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
 	/**
 	 * This function is used to load the set of views

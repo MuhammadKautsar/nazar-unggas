@@ -145,16 +145,16 @@ class Login_model extends CI_Model
      * This function used to get access matrix of a role by roleId
      * @param number $roleId : This is roleId of user
      */
-    function getRoleAccessMatrix($roleId)
-    {
-        $this->db->select('roleId, access');
-        $this->db->from('tbl_access_matrix');
-        $this->db->where('roleId', $roleId);
-        $query = $this->db->get();
+    // function getRoleAccessMatrix($roleId)
+    // {
+    //     $this->db->select('roleId, access');
+    //     $this->db->from('tbl_access_matrix');
+    //     $this->db->where('roleId', $roleId);
+    //     $query = $this->db->get();
         
-        $result = $query->row();
-        return $result;
-    }
+    //     $result = $query->row();
+    //     return $result;
+    // }
 }
 
 ?>
