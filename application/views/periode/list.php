@@ -2,15 +2,15 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Booking Management
-        <small>Add, Edit, Delete</small>
+        <i class="fa fa-calendar"></i> Periode
+        <small>Tambah, Ubah, Hapus</small>
       </h1>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>booking/add"><i class="fa fa-plus"></i> Add New Booking</a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>periode/add"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
             </div>
         </div>
@@ -49,9 +49,9 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Booking List</h3>
+                    <h3 class="box-title">List Periode</h3>
                     <div class="box-tools">
-                        <form action="<?php echo base_url() ?>booking/bookingListing" method="POST" id="searchList">
+                        <form action="<?php echo base_url() ?>periode/periodeListing" method="POST" id="searchList">
                             <div class="input-group">
                               <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
                               <div class="input-group-btn">
@@ -64,10 +64,12 @@
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
-                        <th>Room Name</th>
-                        <th>Description</th>
-                        <th>Created On</th>
-                        <th class="text-center">Actions</th>
+                        <th>No</th>
+                        <th>ID Periode</th>
+                        <th>Tgl mulai</th>
+                        <th>Jumlah doc</th>
+                        <th>Status</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                     <?php
                     if(!empty($records))
@@ -76,12 +78,14 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo $record->roomName ?></td>
-                        <td><?php echo $record->description ?></td>
-                        <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
+                        <td><?php echo 1 ?></td>
+                        <td><?php echo $record->idperiode ?></td>
+                        <td><?php echo $record->tanggal_mulai ?></td>
+                        <td><?php echo $record->jumlah_doc ?></td>
+                        <td><?php echo $record->status ?></td>
                         <td class="text-center">
-                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'booking/edit/'.$record->bookingId; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-sm btn-danger deleteBooking" href="#" data-bookingid="<?php echo $record->bookingId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'periode/edit/'.$record->idperiode; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-sm btn-danger deleteBooking" href="#" data-bookingid="<?php echo $record->idperiode; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php

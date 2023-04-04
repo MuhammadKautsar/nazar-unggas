@@ -2,8 +2,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Booking Management
-        <small>Add / Edit Booking</small>
+        <i class="fa fa-calendar"></i> Periode
+        <small>Tambah</small>
       </h1>
     </section>
     
@@ -11,30 +11,32 @@
     
         <div class="row">
             <!-- left column -->
-            <div class="col-md-8">
+            <div class="col-md-6">
               <!-- general form elements -->
                 
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Enter Booking Details</h3>
+                        <h3 class="box-title">Masukkan Detail Periode</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addBooking" action="<?php echo base_url() ?>booking/addNewBooking" method="post" role="form">
+                    <form role="form" id="addPeriode" action="<?php echo base_url() ?>periode/addNewPeriode" method="post" role="form">
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-md-6">                                
+                                <div class="col-md-8">                                
                                     <div class="form-group">
-                                        <label for="roomName">Room Name</label>
-                                        <input type="text" class="form-control required" value="<?php echo set_value('roomName'); ?>" id="roomName" name="roomName" maxlength="256" />
+                                        <label for="tanggal_mulai">Tanggal mulai</label>
+                                        <input type="date" class="form-control required" value="<?php echo set_value('tanggal_mulai'); ?>" id="tanggal_mulai" name="tanggal_mulai"/>
                                     </div>
-                                    
                                 </div>
-                                <div class="col-md-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
                                     <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea class="form-control required" id="description" name="description"></textarea>
+                                        <label for="jumlah_doc">Jumlah doc</label>
+                                        <input type="number" class="form-control required" value="<?php echo set_value('jumlah_doc'); ?>" id="jumlah_doc" name="jumlah_doc" maxlength="5" />
                                     </div>
+                                        <input type="hidden" class="form-control required" value="<?php echo set_value('status'); ?>" id="status" name="status" maxlength="25" />
                                 </div>
                             </div>
                         </div><!-- /.box-body -->

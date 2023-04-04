@@ -120,37 +120,19 @@
               </a>
             </li>
             <li>
-              <a href="<?php echo base_url(); ?>roles/roleListing">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
+              <a href="<?php echo base_url(); ?>periode">
+                <i class="fa fa-calendar"></i>
                 <span>Periode</span>
               </a>
             </li>
-            <?php
-            }
-            ?>
-            <?php
-            if($is_admin == 1 ||
-                (array_key_exists('Booking', $access_info) 
-                && ($access_info['Booking']['list'] == 1 || $access_info['Booking']['total_access'] == 1)))
-            {
-              ?>
             <li>
-              <a href="<?php echo base_url(); ?>booking">
+              <a href="<?php echo base_url(); ?>roles">
                 <i class="fa fa-file-text"></i>
                 <span>Laporan</span>
               </a>
             </li>
-              <?php
-            }
-            ?>
-            <?php
-            if($is_admin == 1 ||
-                (array_key_exists('Task', $access_info) 
-                && ($access_info['Task']['list'] == 1 || $access_info['Task']['total_access'] == 1)))
-            {
-              ?>
             <li>
-              <a href="<?php echo base_url(); ?>task">
+              <a href="<?php echo base_url(); ?>dokumentasi">
                 <i class="fa fa-tasks"></i>
                 <span>Dokumentasi</span>
               </a>
@@ -175,7 +157,7 @@
               </a>
             </li>
             <li>
-              <a href="<?php echo base_url(); ?>booking">
+              <a href="<?php echo base_url(); ?>dokumentasi">
                 <i class="fa fa-tasks"></i>
                 <span>Dokumentasi</span>
               </a>
