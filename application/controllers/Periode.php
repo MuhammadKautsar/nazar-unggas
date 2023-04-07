@@ -26,32 +26,25 @@ class Periode extends BaseController
     
     function periodeListing()
     {
-        // if(!$this->hasListAccess())
-        // {
-        //     $this->loadThis();
-        // }
-        // else
-        // {
-            $searchText = '';
-            if(!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
-            }
-            $data['searchText'] = $searchText;
+        $searchText = '';
+        if(!empty($this->input->post('searchText'))) {
+            $searchText = $this->security->xss_clean($this->input->post('searchText'));
+        }
+        $data['searchText'] = $searchText;
             
-            $this->load->library('pagination');
+        $this->load->library('pagination');
             
-            // $count = $this->pm->bookingListingCount($searchText);
+        // $count = $this->pm->bookingListingCount($searchText);
 
-			// $returns = $this->paginationCompress ( "periodeListing/", $count, 10 );
+		// $returns = $this->paginationCompress ( "periodeListing/", $count, 10 );
 
-            $returns = $this->paginationCompress ( "periodeListing/", 10 );
+        $returns = $this->paginationCompress ( "periodeListing/", 10 );
             
-            $data['records'] = $this->pm->periodeListing($searchText, $returns["page"], $returns["segment"]);
+        $data['records'] = $this->pm->periodeListing($searchText, $returns["page"], $returns["segment"]);
             
-            $this->global['pageTitle'] = 'Nazar Unggas : Periode';
+        $this->global['pageTitle'] = 'Nazar Unggas : Periode';
             
-            $this->loadViews("periode/list", $this->global, $data, NULL);
-        // }
+        $this->loadViews("periode/list", $this->global, $data, NULL);
     }
 
     /**
@@ -59,16 +52,9 @@ class Periode extends BaseController
      */
     function add()
     {
-        if(!$this->hasCreateAccess())
-        {
-            $this->loadThis();
-        }
-        else
-        {
-            $this->global['pageTitle'] = 'Nazar Unggas : Tambah Periode Baru';
+        $this->global['pageTitle'] = 'Nazar Unggas : Tambah Periode Baru';
 
-            $this->loadViews("periode/add", $this->global, NULL, NULL);
-        }
+        $this->loadViews("periode/add", $this->global, NULL, NULL);
     }
     
     /**
@@ -76,60 +62,46 @@ class Periode extends BaseController
      */
     function addNewPeriode()
     {
-        if(!$this->hasCreateAccess())
+        $this->load->library('form_validation');
+            
+        $this->form_validation->set_rules('tanggal_mulai','Tanggal Mulai','trim|required');
+        $this->form_validation->set_rules('jumlah_doc','Jumlah_doc','trim|required|max_length[5]');
+        
+        if($this->form_validation->run() == FALSE)
         {
-            $this->loadThis();
+            $this->add();
         }
         else
         {
-            $this->load->library('form_validation');
-            
-            $this->form_validation->set_rules('tanggal_mulai','Tanggal Mulai','trim|required');
-            $this->form_validation->set_rules('jumlah_doc','Jumlah_doc','trim|required|max_length[5]');
-            
-            if($this->form_validation->run() == FALSE)
-            {
-                $this->add();
+            $tanggal_mulai = $this->security->xss_clean($this->input->post('tanggal_mulai'));
+            $jumlah_doc = $this->security->xss_clean($this->input->post('jumlah_doc'));
+           
+            $periodeInfo = array('tanggal_mulai'=>$tanggal_mulai, 'jumlah_doc'=>$jumlah_doc, 'status'=>'Aktif');
+                
+            $result = $this->pm->addNewPeriode($periodeInfo);
+                
+            if($result > 0) {
+                $this->session->set_flashdata('success', 'Periode baru sukses dibuat');
+            } else {
+                 $this->session->set_flashdata('error', 'Periode gagal dibuat');
             }
-            else
-            {
-                $tanggal_mulai = $this->security->xss_clean($this->input->post('tanggal_mulai'));
-                $jumlah_doc = $this->security->xss_clean($this->input->post('jumlah_doc'));
                 
-                $periodeInfo = array('tanggal_mulai'=>$tanggal_mulai, 'jumlah_doc'=>$jumlah_doc, 'status'=>'Aktif');
-                
-                $result = $this->pm->addNewPeriode($periodeInfo);
-                
-                if($result > 0) {
-                    $this->session->set_flashdata('success', 'Periode baru sukses dibuat');
-                } else {
-                    $this->session->set_flashdata('error', 'Periode gagal dibuat');
-                }
-                
-                redirect('periode/periodeListing');
-            }
+            redirect('periode/periodeListing');
         }
     }
 
     function edit($periodeId = NULL)
     {
-        if(!$this->hasUpdateAccess())
+        if($periodeId == null)
         {
-            $this->loadThis();
+            redirect('periode/periodeListing');
         }
-        else
-        {
-            if($periodeId == null)
-            {
-                redirect('periode/periodeListing');
-            }
             
-            $data['periodeInfo'] = $this->pm->getPeriodeInfo($periodeId);
+        $data['periodeInfo'] = $this->pm->getPeriodeInfo($periodeId);
 
-            $this->global['pageTitle'] = 'Nazar Unggas : Ubah Periode';
+        $this->global['pageTitle'] = 'Nazar Unggas : Ubah Periode';
             
-            $this->loadViews("periode/edit", $this->global, $data, NULL);
-        }
+        $this->loadViews("periode/edit", $this->global, $data, NULL);
     }
     
     
@@ -138,46 +110,39 @@ class Periode extends BaseController
      */
     function editPeriode()
     {
-        if(!$this->hasUpdateAccess())
+        $this->load->library('form_validation');
+            
+        $periodeId = $this->input->post('idperiode');
+            
+        // $this->form_validation->set_rules('tanggal_mulai','Tanggal Mulai','trim|required');
+        // $this->form_validation->set_rules('jumlah_doc','Jumlah_doc','trim|required|max_length[5]');
+        $this->form_validation->set_rules('status','Status','trim|required');
+            
+        if($this->form_validation->run() == FALSE)
         {
-            $this->loadThis();
+            $this->edit($periodeId);
         }
         else
         {
-            $this->load->library('form_validation');
-            
-            $periodeId = $this->input->post('idperiode');
-            
-            // $this->form_validation->set_rules('tanggal_mulai','Tanggal Mulai','trim|required');
-            // $this->form_validation->set_rules('jumlah_doc','Jumlah_doc','trim|required|max_length[5]');
-            $this->form_validation->set_rules('status','Status','trim|required');
-            
-            if($this->form_validation->run() == FALSE)
+            // $tanggal_mulai = $this->security->xss_clean($this->input->post('tanggal_mulai'));
+            // $jumlah_doc = $this->security->xss_clean($this->input->post('jumlah_doc'));
+            $status = $this->security->xss_clean($this->input->post('status'));
+                
+            // $periodeInfo = array('tanggal_mulai'=>$tanggal_mulai, 'jumlah_doc'=>$jumlah_doc, 'status'=>$status);
+            $periodeInfo = array('status'=>$status);
+
+            $result = $this->pm->editPeriode($periodeInfo, $periodeId);
+                
+            if($result == true)
             {
-                $this->edit($periodeId);
+                $this->session->set_flashdata('success', 'Periode updated successfully');
             }
             else
             {
-                // $tanggal_mulai = $this->security->xss_clean($this->input->post('tanggal_mulai'));
-                // $jumlah_doc = $this->security->xss_clean($this->input->post('jumlah_doc'));
-                $status = $this->security->xss_clean($this->input->post('status'));
-                
-                // $periodeInfo = array('tanggal_mulai'=>$tanggal_mulai, 'jumlah_doc'=>$jumlah_doc, 'status'=>$status);
-                $periodeInfo = array('status'=>$status);
-
-                $result = $this->pm->editPeriode($periodeInfo, $periodeId);
-                
-                if($result == true)
-                {
-                    $this->session->set_flashdata('success', 'Periode updated successfully');
-                }
-                else
-                {
-                    $this->session->set_flashdata('error', 'Periode updation failed');
-                }
-                
-                redirect('periode/periodeListing');
+                $this->session->set_flashdata('error', 'Periode updation failed');
             }
+                
+            redirect('periode/periodeListing');
         }
     }
 }

@@ -60,7 +60,7 @@
                                         <input type="text" class="form-control required digits" id="mobile" value="<?php echo set_value('mobile'); ?>" name="mobile" maxlength="10">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="role">Role</label>
                                         <select class="form-control required" id="role" name="role">
@@ -84,7 +84,7 @@
                                             ?>
                                         </select>
                                     </div>
-                                </div>    
+                                </div>     -->
                             </div>
                             <div class="row">
                                 <div class="col-md-6">

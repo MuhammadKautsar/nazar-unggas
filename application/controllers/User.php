@@ -74,11 +74,11 @@ class User extends BaseController
         else
         {
             $this->load->model('user_model');
-            $data['roles'] = $this->user_model->getUserRoles();
+            // $data['roles'] = $this->user_model->getUserRoles();
             
             $this->global['pageTitle'] = 'Nazar Unggas : Add New User';
 
-            $this->loadViews("users/addNew", $this->global, $data, NULL);
+            $this->loadViews("users/addNew", $this->global, NULL);
         }
     }
 
@@ -169,7 +169,7 @@ class User extends BaseController
                 redirect('userListing');
             }
             
-            $data['roles'] = $this->user_model->getUserRoles();
+            // $data['roles'] = $this->user_model->getUserRoles();
             $data['userInfo'] = $this->user_model->getUserInfo($userId);
 
             $this->global['pageTitle'] = 'Nazar Unggas : Edit User';

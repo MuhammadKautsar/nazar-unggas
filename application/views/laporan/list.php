@@ -2,15 +2,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Roles Management
-        <small>Add, Edit, Delete</small>
+        <i class="fa fa-file-text"></i> Laporan
       </h1>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>roles/add"><i class="fa fa-plus"></i> Add New Role</a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>periode/add"><i class="fa fa-print"></i> Cetak Laporan</a>
                 </div>
             </div>
         </div>
@@ -49,9 +48,9 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Roles List</h3>
+                    <h3 class="box-title">List Laporan</h3>
                     <div class="box-tools">
-                        <form action="<?php echo base_url() ?>roles/roleListing" method="POST" id="searchList">
+                        <form action="<?php echo base_url() ?>periode/periodeListing" method="POST" id="searchList">
                             <div class="input-group">
                               <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
                               <div class="input-group-btn">
@@ -64,33 +63,30 @@
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Created On</th>
-                        <th class="text-center">Actions</th>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Umur</th>
+                        <th>Ayam mati</th>
+                        <th>Ayam afkir</th>
+                        <th>Pakan (sak)</th>
+                        <th>Berat ayam</th>
+                        <th>Periode</th>
                     </tr>
                     <?php
-                    if(!empty($roleRecords))
+                    if(!empty($records))
                     {
-                        foreach($roleRecords as $record)
+                        foreach($records as $record)
                         {
                     ?>
                     <tr>
-                        <td><?php echo $record->role ?></td>
-                        <td>
-                            <?php 
-                            if($record->status == ACTIVE) {
-                                ?> <span class="label label-success">Active</span> <?php
-                            } else {
-                                ?> <span class="label label-warning">Inactive</span> <?php
-                            }
-                            ?>
-                        </td>
-                        <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
-                        <td class="text-center">
-                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'roles/edit/'.$record->roleId; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-sm btn-danger deleteRole" href="#" data-roleid="<?php echo $record->roleId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
-                        </td>
+                        <td><?php echo $record->iddata ?></td>
+                        <td><?php echo $record->tanggal ?></td>
+                        <td><?php echo $record->umur ?></td>
+                        <td><?php echo $record->ayam_mati ?></td>
+                        <td><?php echo $record->afkir ?></td>
+                        <td><?php echo $record->pakan ?></td>
+                        <td><?php echo $record->berat_ayam ?></td>
+                        <td><?php echo $record->periode_id ?></td>
                     </tr>
                     <?php
                         }
@@ -114,7 +110,7 @@
             e.preventDefault();            
             var link = jQuery(this).get(0).href;            
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "roleListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "booking/bookingListing/" + value);
             jQuery("#searchList").submit();
         });
     });

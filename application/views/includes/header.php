@@ -126,7 +126,7 @@
               </a>
             </li>
             <li>
-              <a href="<?php echo base_url(); ?>roles">
+              <a href="<?php echo base_url(); ?>laporan">
                 <i class="fa fa-file-text"></i>
                 <span>Laporan</span>
               </a>
@@ -163,7 +163,7 @@
               </a>
             </li>
             <li>
-              <a href="<?php echo base_url(); ?>cetakLaporan">
+              <a href="<?php echo base_url(); ?>laporan">
                 <i class="fa fa-print"></i>
                 <span>Cetak Laporan</span>
               </a>

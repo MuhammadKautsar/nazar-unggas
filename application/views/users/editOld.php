@@ -70,7 +70,7 @@ $isAdmin = $userInfo->isAdmin;
                                         <input type="text" class="form-control" id="mobile" placeholder="Mobile Number" name="mobile" value="<?php echo $mobile; ?>" maxlength="10">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="role">Role</label>
                                         <select class="form-control" id="role" name="role">
@@ -94,7 +94,7 @@ $isAdmin = $userInfo->isAdmin;
                                             ?>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>  -->
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
