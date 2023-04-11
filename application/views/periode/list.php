@@ -71,6 +71,7 @@
                         <th>Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
+                    <?php $i = 1; ?>
                     <?php
                     if(!empty($records))
                     {
@@ -78,14 +79,14 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo 1 ?></td>
-                        <td><?php echo $record->idperiode ?></td>
+                        <td><?php echo $i++; ?></td>
+                        <td>000<?php echo $record->idperiode ?></td>
                         <td><?php echo $record->tanggal_mulai ?></td>
                         <td><?php echo $record->jumlah_doc ?></td>
                         <td><?php echo $record->status ?></td>
                         <td class="text-center">
                             <a class="btn btn-sm btn-info" href="<?php echo base_url().'periode/edit/'.$record->idperiode; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-sm btn-danger deleteBooking" href="#" data-bookingid="<?php echo $record->idperiode; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('periode/delete/'.$record->idperiode); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php
@@ -110,7 +111,7 @@
             e.preventDefault();            
             var link = jQuery(this).get(0).href;            
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "booking/bookingListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "periode/periodeListing/" + value);
             jQuery("#searchList").submit();
         });
     });

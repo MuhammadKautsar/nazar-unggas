@@ -78,9 +78,6 @@ $route['changePassword'] = "user/changePassword";
 $route['changePassword/(:any)'] = "user/changePassword/$1";
 $route['pageNotFound'] = "user/pageNotFound";
 $route['checkEmailExists'] = "user/checkEmailExists";
-$route['login-history'] = "user/loginHistoy";
-$route['login-history/(:num)'] = "user/loginHistoy/$1";
-$route['login-history/(:num)/(:num)'] = "user/loginHistoy/$1/$2";
 
 $route['forgotPassword'] = "login/forgotPassword";
 $route['resetPasswordUser'] = "login/resetPasswordUser";
@@ -89,9 +86,13 @@ $route['resetPasswordConfirmUser/(:any)'] = "login/resetPasswordConfirmUser/$1";
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = "login/resetPasswordConfirmUser/$1/$2";
 $route['createPasswordUser'] = "login/createPasswordUser";
 
-$route['roleListing'] = "roles/roleListing";
-$route['roleListing/(:num)'] = "roles/roleListing/$1";
-$route['roleListing/(:num)/(:num)'] = "roles/roleListing/$1/$2";
+$route['periode/delete/(:num)'] = 'Periode/delete/$1';
+
+$route['dataHarian/delete/(:num)'] = 'DataHarian/delete/$1';
+
+$route['biayaOperasional/delete/(:num)'] = 'BiayaOperasional/delete/$1';
+
+$route['dokumentasi/delete/(:num)'] = 'Dokumentasi/delete/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

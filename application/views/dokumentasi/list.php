@@ -10,7 +10,18 @@
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
+                <?php
+                if($is_admin == 1)
+                {
+                ?>
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>periode/add"><i class="fa fa-print"></i> Cetak Dokumentasi</a>
+                <?php
+                } else {
+                ?>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>dokumentasi/add"><i class="fa fa-plus"></i> Tambah</a>
+                <?php
+                }
+                ?>
                 </div>
             </div>
         </div>
@@ -64,6 +75,10 @@
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
+                    <?php
+                    if($is_admin == 1)
+                    {
+                    ?>
                         <th class="text-center">No</th>
                         <th class="text-center">Jumlah DOC</th>
                         <th class="text-center">Jumlah panen</th>
@@ -73,8 +88,25 @@
                         <th class="text-center">Berat ayam</th>
                         <th class="text-center">Periode</th>
                         <th class="text-center">Biaya operasional</th>
-                        <!-- <th class="text-center">Aksi</th> -->
+                    <?php
+                    } else {
+                    ?>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Periode</th>
+                        <th class="text-center">Jumlah DOC</th>
+                        <th class="text-center">Jumlah panen(kg)</th>
+                        <th class="text-center">Tanggal mulai</th>
+                        <th class="text-center">Tanggal panen</th>
+                        <th class="text-center">Sisa pakan(sak)</th>
+                        <th class="text-center">Berat ayam</th>
+                        <th class="text-center">Biaya operasional</th>
+                        <th class="text-center">Aksi</th>
+                    <?php
+                    }
+                    ?>
+                </div>
                     </tr>
+                    <?php $i = 1; ?>
                     <?php
                     if(!empty($records))
                     {
@@ -82,7 +114,11 @@
                         {
                     ?>
                     <tr>
-                        <td class="text-center"><?php echo 1 ?></td>
+                        <?php
+                        if($is_admin == 1)
+                        {
+                        ?>
+                        <td class="text-center"><?php echo $i++; ?></td>
                         <td class="text-center"><?php echo $record->iddokumentasi ?></td>
                         <td class="text-center"><?php echo $record->iddokumentasi ?></td>
                         <td class="text-center"><?php echo $record->jumlah_panen ?></td>
@@ -91,10 +127,25 @@
                         <td class="text-center"><?php echo $record->sisa_pakan ?></td>
                         <td class="text-center"><?php echo $record->berat_ayam ?></td>
                         <td class="text-center"><?php echo $record->jumlah_biaya ?></td>
-                        <!-- <td class="text-center">
-                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'periode/edit/'.$record->idperiode; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-sm btn-danger deleteBooking" href="#" data-bookingid="<?php echo $record->idperiode; ?>" title="Delete"><i class="fa fa-trash"></i></a>
-                        </td> -->
+                        <?php
+                        } else {
+                        ?>
+                        <td class="text-center"><?php echo $i++; ?></td>
+                        <td class="text-center"><?php echo $record->iddokumentasi ?></td>
+                        <td class="text-center"><?php echo $record->iddokumentasi ?></td>
+                        <td class="text-center"><?php echo $record->jumlah_panen ?></td>
+                        <td class="text-center"><?php echo $record->jumlah_panen ?></td>
+                        <td class="text-center"><?php echo $record->tgl_panen ?></td>
+                        <td class="text-center"><?php echo $record->sisa_pakan ?></td>
+                        <td class="text-center"><?php echo $record->berat_ayam ?></td>
+                        <td class="text-center"><?php echo $record->jumlah_biaya ?></td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'dokumentasi/edit/'.$record->iddokumentasi; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('dokumentasi/delete/'.$record->iddokumentasi); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></a>
+                        </td>
+                        <?php
+                        }
+                        ?>
                     </tr>
                     <?php
                         }

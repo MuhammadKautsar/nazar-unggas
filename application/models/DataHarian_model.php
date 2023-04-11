@@ -27,13 +27,13 @@ class DataHarian_model extends CI_Model
      */
     function dataHarianListing($searchText, $page, $segment)
     {
-        // $this->db->select('BaseTbl.iddata, BaseTbl.minggu_ke, BaseTbl.tanggal, BaseTbl.umur');
+        $this->db->select('BaseTbl.iddata, BaseTbl.minggu_ke, BaseTbl.tanggal, BaseTbl.umur, BaseTbl.ayam_mati, BaseTbl.afkir, BaseTbl.pakan, BaseTbl.berat_ayam, BaseTbl.periode_id');
         $this->db->from('data_harian as BaseTbl');
         if(!empty($searchText)) {
             $likeCriteria = "(BaseTbl.status LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
-        $this->db->order_by('BaseTbl.iddata', 'DESC');
+        // $this->db->order_by('BaseTbl.iddata', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
         
@@ -44,10 +44,10 @@ class DataHarian_model extends CI_Model
     /**
      * @return number $insert_id : This is last inserted id
      */
-    function addNewPeriode($periodeInfo)
+    function addNewDataHarian($dataHarianInfo)
     {
         $this->db->trans_start();
-        $this->db->insert('periode', $periodeInfo);
+        $this->db->insert('data_harian', $dataHarianInfo);
         
         $insert_id = $this->db->insert_id();
         
@@ -56,20 +56,20 @@ class DataHarian_model extends CI_Model
         return $insert_id;
     }
     
-    function getPeriodeInfo($periodeId)
+    function getDataHarianInfo($dataHarianId)
     {
-        $this->db->select('idperiode, tanggal_mulai, jumlah_doc, status');
-        $this->db->from('periode');
-        $this->db->where('idperiode', $periodeId);
+        $this->db->select('BaseTbl.iddata, BaseTbl.minggu_ke, BaseTbl.tanggal, BaseTbl.umur, BaseTbl.ayam_mati, BaseTbl.afkir, BaseTbl.pakan, BaseTbl.berat_ayam, BaseTbl.periode_id');
+        $this->db->from('data_harian as BaseTbl');
+        $this->db->where('iddata', $dataHarianId);
         $query = $this->db->get();
         
         return $query->row();
     }
     
-    function editPeriode($periodeInfo, $periodeId)
+    function editDataHarian($dataHarianInfo, $dataHarianId)
     {
-        $this->db->where('idperiode', $periodeId);
-        $this->db->update('periode', $periodeInfo);
+        $this->db->where('iddata', $dataHarianId);
+        $this->db->update('data_harian', $dataHarianInfo);
         
         return TRUE;
     }

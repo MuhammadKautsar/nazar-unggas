@@ -145,6 +145,17 @@ class Periode extends BaseController
             redirect('periode/periodeListing');
         }
     }
+
+    public function delete($id)
+    {
+        // Hapus data dari database
+        $this->db->where('idperiode', $id);
+        $this->db->delete('periode');
+
+        // Tampilkan pesan berhasil dihapus dan kembali ke halaman sebelumnya
+        $this->session->set_flashdata('success', 'Data berhasil dihapus.');
+        redirect($_SERVER['HTTP_REFERER']);
+    }
 }
 
 ?>

@@ -1,15 +1,17 @@
 <?php
-$taskId = $taskInfo->taskId;
-$taskTitle = $taskInfo->taskTitle;
-$description = $taskInfo->description;
+$biayaOperasionalId = $biayaOperasionalInfo->idbiaya;
+$tanggal = $biayaOperasionalInfo->tanggal;
+$kebutuhan_id = $biayaOperasionalInfo->kebutuhan_id;
+$harga = $biayaOperasionalInfo->harga;
+$periode_id = $biayaOperasionalInfo->periode_id;
 ?>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Task Management
-        <small>Add / Edit Task</small>
+         <i class="fa fa-money "></i> Biaya Operasional
+        <small>Ubah</small>
       </h1>
     </section>
     
@@ -26,21 +28,26 @@ $description = $taskInfo->description;
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     
-                    <form role="form" action="<?php echo base_url() ?>task/editTask" method="post" id="editTask" role="form">
+                    <form role="form" action="<?php echo base_url() ?>biayaOperasional/editBiayaOperasional" method="post" id="editBiayaOperasional" role="form">
                         <div class="box-body">
-                        <div class="row">
-                                <div class="col-md-6">                                
+                            <div class="row">
+                                <div class="col-md-8">  
+                                    <input type="hidden" value="<?php echo $biayaOperasionalId; ?>" name="idbiaya" id="biayaOperasionalId" /> 
                                     <div class="form-group">
-                                        <label for="taskTitle">Task Title</label>
-                                        <input type="text" class="form-control required" value="<?php echo $taskTitle; ?>" id="taskTitle" name="taskTitle" maxlength="256" />
-                                        <input type="hidden" value="<?php echo $taskId; ?>" name="taskId" id="taskId" />
+                                        <label for="tanggal">Tanggal</label>
+                                        <input type="date" class="form-control required" value="<?php echo $tanggal; ?>" id="tanggal" name="tanggal" maxlength="256" />
+                                    </div>                              
+                                    <div class="form-group">
+                                        <label for="kebutuhan_id">Jenis Kebutuhan</label>
+                                        <input type="number" class="form-control required" value="<?php echo $kebutuhan_id; ?>" id="kebutuhan_id" name="kebutuhan_id" maxlength="256" />
                                     </div>
-                                    
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea class="form-control required" id="description" name="description"><?php echo $description; ?></textarea>
+                                        <label for="harga">Harga</label>
+                                        <input type="number" class="form-control required" value="<?php echo $harga; ?>" id="harga" name="harga" maxlength="256" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="periode_id">Periode</label>
+                                        <input type="number" class="form-control required" value="<?php echo $periode_id; ?>" id="periode_id" name="periode_id" maxlength="256" />
                                     </div>
                                 </div>
                             </div>

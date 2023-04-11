@@ -45,10 +45,10 @@ class Dokumentasi_model extends CI_Model
     /**
      * @return number $insert_id : This is last inserted id
      */
-    function addNewPeriode($periodeInfo)
+    function addNewDokumentasi($dokumentasiInfo)
     {
         $this->db->trans_start();
-        $this->db->insert('periode', $periodeInfo);
+        $this->db->insert('dokumentasi', $dokumentasiInfo);
         
         $insert_id = $this->db->insert_id();
         
@@ -57,20 +57,20 @@ class Dokumentasi_model extends CI_Model
         return $insert_id;
     }
     
-    function getPeriodeInfo($periodeId)
+    function getDokumentasiInfo($dokumentasiId)
     {
-        $this->db->select('idperiode, tanggal_mulai, jumlah_doc, status');
-        $this->db->from('periode');
-        $this->db->where('idperiode', $periodeId);
+        $this->db->select('iddokumentasi, jumlah_panen, tgl_panen, sisa_pakan, berat_ayam, jumlah_biaya, periode_id');
+        $this->db->from('dokumentasi');
+        $this->db->where('iddokumentasi', $dokumentasiId);
         $query = $this->db->get();
         
         return $query->row();
     }
     
-    function editPeriode($periodeInfo, $periodeId)
+    function editDokumentasi($dokumentasiInfo, $dokumentasiId)
     {
-        $this->db->where('idperiode', $periodeId);
-        $this->db->update('periode', $periodeInfo);
+        $this->db->where('iddokumentasi', $dokumentasiId);
+        $this->db->update('dokumentasi', $dokumentasiInfo);
         
         return TRUE;
     }

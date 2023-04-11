@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>periode/add"><i class="fa fa-plus"></i> Tambah</a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>dataHarian/add"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
             </div>
         </div>
@@ -92,8 +92,8 @@
                         <td><?php echo $record->berat_ayam ?></td>
                         <td><?php echo $record->periode_id ?></td>
                         <td class="text-center">
-                            <!-- <a class="btn btn-sm btn-info" href="<?php echo base_url().'periode/edit/'.$record->idperiode; ?>" title="Edit"><i class="fa fa-pencil"></i></a> -->
-                            <!-- <a class="btn btn-sm btn-danger deleteBooking" href="#" data-bookingid="<?php echo $record->idperiode; ?>" title="Delete"><i class="fa fa-trash"></i></a> -->
+                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'dataHarian/edit/'.$record->iddata; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('dataHarian/delete/'.$record->iddata); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php

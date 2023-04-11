@@ -26,32 +26,25 @@ class Dokumentasi extends BaseController
     
     function dokumentasiListing()
     {
-        // if(!$this->hasListAccess())
-        // {
-        //     $this->loadThis();
-        // }
-        // else
-        // {
-            $searchText = '';
-            if(!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
-            }
-            $data['searchText'] = $searchText;
-            
-            $this->load->library('pagination');
-            
-            // $count = $this->pm->bookingListingCount($searchText);
+        $searchText = '';
+        if(!empty($this->input->post('searchText'))) {
+            $searchText = $this->security->xss_clean($this->input->post('searchText'));
+        }
+        $data['searchText'] = $searchText;
+        
+        $this->load->library('pagination');
+        
+        // $count = $this->pm->bookingListingCount($searchText);
 
-			// $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
+        // $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
 
-            $returns = $this->paginationCompress ( "dokumentasiListing/", 10 );
-            
-            $data['records'] = $this->dm->dokumentasiListing($searchText, $returns["page"], $returns["segment"]);
-            
-            $this->global['pageTitle'] = 'Nazar Unggas : Dokumentasi';
-            
-            $this->loadViews("dokumentasi/list", $this->global, $data, NULL);
-        //}
+        $returns = $this->paginationCompress ( "dokumentasiListing/", 10 );
+        
+        $data['records'] = $this->dm->dokumentasiListing($searchText, $returns["page"], $returns["segment"]);
+        
+        $this->global['pageTitle'] = 'Nazar Unggas : Dokumentasi';
+        
+        $this->loadViews("dokumentasi/list", $this->global, $data, NULL);
     }
 
     /**
@@ -59,126 +52,122 @@ class Dokumentasi extends BaseController
      */
     function add()
     {
-        if(!$this->hasCreateAccess())
-        {
-            $this->loadThis();
-        }
-        else
-        {
-            $this->global['pageTitle'] = 'Nazar Unggas : Tambah Periode Baru';
+        $this->global['pageTitle'] = 'Nazar Unggas : Tambah Periode Baru';
 
-            $this->loadViews("periode/add", $this->global, NULL, NULL);
-        }
+        $this->loadViews("dokumentasi/add", $this->global, NULL, NULL);
     }
     
     /**
      * This function is used to add new user to the system
      */
-    function addNewPeriode()
+    function addNewDokumentasi()
     {
-        if(!$this->hasCreateAccess())
+        $this->load->library('form_validation');
+            
+        $this->form_validation->set_rules('jumlah_panen','Jumlah Panen','trim|required');
+        $this->form_validation->set_rules('tgl_panen','Tanggal Panen','trim|required');
+        $this->form_validation->set_rules('sisa_pakan','Sisa pakan (sak)','trim|required');
+        $this->form_validation->set_rules('berat_ayam','Berat Ayam','trim|required');
+        $this->form_validation->set_rules('jumlah_biaya','Jumlah Biaya','trim|required');
+        $this->form_validation->set_rules('periode_id','Periode','trim|required');
+        
+        if($this->form_validation->run() == FALSE)
         {
-            $this->loadThis();
+            $this->add();
         }
         else
         {
-            $this->load->library('form_validation');
+            $jumlah_panen = $this->security->xss_clean($this->input->post('jumlah_panen'));
+            $tgl_panen = $this->security->xss_clean($this->input->post('tgl_panen'));
+            $sisa_pakan = $this->security->xss_clean($this->input->post('sisa_pakan'));
+            $berat_ayam = $this->security->xss_clean($this->input->post('berat_ayam'));
+            $jumlah_biaya = $this->security->xss_clean($this->input->post('jumlah_biaya'));
+            $periode_id = $this->security->xss_clean($this->input->post('periode_id'));
             
-            $this->form_validation->set_rules('tanggal_mulai','Tanggal Mulai','trim|required');
-            $this->form_validation->set_rules('jumlah_doc','Jumlah_doc','trim|required|max_length[5]');
+            $dokumentasiInfo = array('jumlah_panen'=>$jumlah_panen, 'tgl_panen'=>$tgl_panen, 'sisa_pakan'=>$sisa_pakan, 'berat_ayam'=>$berat_ayam, 'jumlah_biaya'=>$jumlah_biaya, 'periode_id'=>$periode_id);
             
-            if($this->form_validation->run() == FALSE)
-            {
-                $this->add();
+            $result = $this->dm->addNewDokumentasi($dokumentasiInfo);
+            
+            if($result > 0) {
+                $this->session->set_flashdata('success', 'Dokumentasi baru sukses dibuat');
+            } else {
+                $this->session->set_flashdata('error', 'Dokumentasi gagal dibuat');
             }
-            else
-            {
-                $tanggal_mulai = $this->security->xss_clean($this->input->post('tanggal_mulai'));
-                $jumlah_doc = $this->security->xss_clean($this->input->post('jumlah_doc'));
-                
-                $periodeInfo = array('tanggal_mulai'=>$tanggal_mulai, 'jumlah_doc'=>$jumlah_doc, 'status'=>'Aktif');
-                
-                $result = $this->pm->addNewPeriode($periodeInfo);
-                
-                if($result > 0) {
-                    $this->session->set_flashdata('success', 'Periode baru sukses dibuat');
-                } else {
-                    $this->session->set_flashdata('error', 'Periode gagal dibuat');
-                }
-                
-                redirect('periode/periodeListing');
-            }
+            
+            redirect('dokumentasi/dokumentasiListing');
         }
     }
 
-    function edit($periodeId = NULL)
+    function edit($dokumentasiId = NULL)
     {
-        if(!$this->hasUpdateAccess())
+        if($dokumentasiId == null)
         {
-            $this->loadThis();
+            redirect('dokumentasi/dokumentasiListing');
         }
-        else
-        {
-            if($periodeId == null)
-            {
-                redirect('periode/periodeListing');
-            }
-            
-            $data['periodeInfo'] = $this->pm->getPeriodeInfo($periodeId);
+        
+        $data['dokumentasiInfo'] = $this->dm->getDokumentasiInfo($dokumentasiId);
 
-            $this->global['pageTitle'] = 'Nazar Unggas : Ubah Periode';
-            
-            $this->loadViews("periode/edit", $this->global, $data, NULL);
-        }
+        $this->global['pageTitle'] = 'Nazar Unggas : Ubah Dokumentasi';
+        
+        $this->loadViews("dokumentasi/edit", $this->global, $data, NULL);
     }
     
     
     /**
      * This function is used to edit the user information
      */
-    function editPeriode()
+    function editDokumentasi()
     {
-        if(!$this->hasUpdateAccess())
+        $this->load->library('form_validation');
+            
+        $dokumentasiId = $this->input->post('iddokumentasi');
+        
+        $this->form_validation->set_rules('jumlah_panen','Jumlah Panen','trim|required');
+        $this->form_validation->set_rules('tgl_panen','Tanggal Panen','trim|required');
+        $this->form_validation->set_rules('sisa_pakan','Sisa pakan (sak)','trim|required');
+        $this->form_validation->set_rules('berat_ayam','Berat Ayam','trim|required');
+        $this->form_validation->set_rules('jumlah_biaya','Jumlah Biaya','trim|required');
+        $this->form_validation->set_rules('periode_id','Periode','trim|required');
+        
+        if($this->form_validation->run() == FALSE)
         {
-            $this->loadThis();
+            $this->edit($dokumentasiId);
         }
         else
         {
-            $this->load->library('form_validation');
+            $jumlah_panen = $this->security->xss_clean($this->input->post('jumlah_panen'));
+            $tgl_panen = $this->security->xss_clean($this->input->post('tgl_panen'));
+            $sisa_pakan = $this->security->xss_clean($this->input->post('sisa_pakan'));
+            $berat_ayam = $this->security->xss_clean($this->input->post('berat_ayam'));
+            $jumlah_biaya = $this->security->xss_clean($this->input->post('jumlah_biaya'));
+            $periode_id = $this->security->xss_clean($this->input->post('periode_id'));
             
-            $periodeId = $this->input->post('idperiode');
+            $dokumentasiInfo = array('jumlah_panen'=>$jumlah_panen, 'tgl_panen'=>$tgl_panen, 'sisa_pakan'=>$sisa_pakan, 'berat_ayam'=>$berat_ayam, 'jumlah_biaya'=>$jumlah_biaya, 'periode_id'=>$periode_id);
+
+            $result = $this->dm->editDokumentasi($dokumentasiInfo, $dokumentasiId);
             
-            // $this->form_validation->set_rules('tanggal_mulai','Tanggal Mulai','trim|required');
-            // $this->form_validation->set_rules('jumlah_doc','Jumlah_doc','trim|required|max_length[5]');
-            $this->form_validation->set_rules('status','Status','trim|required');
-            
-            if($this->form_validation->run() == FALSE)
+            if($result == true)
             {
-                $this->edit($periodeId);
+                $this->session->set_flashdata('success', 'Dokumentasi updated successfully');
             }
             else
             {
-                // $tanggal_mulai = $this->security->xss_clean($this->input->post('tanggal_mulai'));
-                // $jumlah_doc = $this->security->xss_clean($this->input->post('jumlah_doc'));
-                $status = $this->security->xss_clean($this->input->post('status'));
-                
-                // $periodeInfo = array('tanggal_mulai'=>$tanggal_mulai, 'jumlah_doc'=>$jumlah_doc, 'status'=>$status);
-                $periodeInfo = array('status'=>$status);
-
-                $result = $this->pm->editPeriode($periodeInfo, $periodeId);
-                
-                if($result == true)
-                {
-                    $this->session->set_flashdata('success', 'Periode updated successfully');
-                }
-                else
-                {
-                    $this->session->set_flashdata('error', 'Periode updation failed');
-                }
-                
-                redirect('periode/periodeListing');
+                $this->session->set_flashdata('error', 'Dokumentasi updation failed');
             }
+            
+            redirect('dokumentasi/dokumentasiListing');
         }
+    }
+
+    public function delete($id)
+    {
+        // Hapus data dari database
+        $this->db->where('iddokumentasi', $id);
+        $this->db->delete('dokumentasi');
+
+        // Tampilkan pesan berhasil dihapus dan kembali ke halaman sebelumnya
+        $this->session->set_flashdata('success', 'Data berhasil dihapus.');
+        redirect($_SERVER['HTTP_REFERER']);
     }
 }
 

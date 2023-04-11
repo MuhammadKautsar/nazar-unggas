@@ -44,10 +44,10 @@ class BiayaOperasional_model extends CI_Model
     /**
      * @return number $insert_id : This is last inserted id
      */
-    function addNewPeriode($periodeInfo)
+    function addNewBiayaOperasional($biayaOperasionalInfo)
     {
         $this->db->trans_start();
-        $this->db->insert('periode', $periodeInfo);
+        $this->db->insert('biaya_operasional', $biayaOperasionalInfo);
         
         $insert_id = $this->db->insert_id();
         
@@ -56,20 +56,20 @@ class BiayaOperasional_model extends CI_Model
         return $insert_id;
     }
     
-    function getPeriodeInfo($periodeId)
+    function getBiayaOperasionalInfo($biayaOperasionalId)
     {
-        $this->db->select('idperiode, tanggal_mulai, jumlah_doc, status');
-        $this->db->from('periode');
-        $this->db->where('idperiode', $periodeId);
+        $this->db->select('idbiaya, tanggal, kebutuhan_id, harga, periode_id');
+        $this->db->from('biaya_operasional');
+        $this->db->where('idbiaya', $biayaOperasionalId);
         $query = $this->db->get();
         
         return $query->row();
     }
     
-    function editPeriode($periodeInfo, $periodeId)
+    function editBiayaOperasional($biayaOperasionalInfo, $biayaOperasionalId)
     {
-        $this->db->where('idperiode', $periodeId);
-        $this->db->update('periode', $periodeInfo);
+        $this->db->where('idbiaya', $biayaOperasionalId);
+        $this->db->update('biaya_operasional', $biayaOperasionalInfo);
         
         return TRUE;
     }

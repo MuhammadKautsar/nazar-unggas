@@ -6,15 +6,14 @@ class Periode_model extends CI_Model
      * @param string $searchText : This is optional search text
      * @return number $count : This is row count
      */
-    function bookingListingCount($searchText)
+    function periodeListingCount($searchText)
     {
-        $this->db->select('BaseTbl.bookingId, BaseTbl.roomName, BaseTbl.description, BaseTbl.createdDtm');
-        $this->db->from('tbl_booking as BaseTbl');
+        $this->db->select('BaseTbl.idperiode, BaseTbl.tanggal_mulai, BaseTbl.jumlah_doc, BaseTbl.status');
+        $this->db->from('periode as BaseTbl');
         if(!empty($searchText)) {
             $likeCriteria = "(BaseTbl.roomName LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
-        $this->db->where('BaseTbl.isDeleted', 0);
         $query = $this->db->get();
         
         return $query->num_rows();
@@ -34,7 +33,7 @@ class Periode_model extends CI_Model
             $likeCriteria = "(BaseTbl.status LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
-        $this->db->order_by('BaseTbl.idperiode', 'DESC');
+        // $this->db->order_by('BaseTbl.idperiode', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
         
