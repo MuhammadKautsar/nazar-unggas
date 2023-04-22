@@ -17,7 +17,7 @@
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3>150</h3>
+                  <h3><?php echo $total_users; ?></h3>
                   <p>Manajer</p>
                 </div>
                 <div class="icon">
@@ -30,7 +30,7 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+                  <h3><?php echo $total_periode; ?></h3>
                   <p>Periode</p>
                 </div>
                 <div class="icon">
@@ -43,7 +43,7 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>44</h3>
+                  <h3>4</h3>
                   <p>Laporan</p>
                 </div>
                 <div class="icon">
@@ -56,7 +56,7 @@
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>65</h3>
+                <h3><?php echo $total_dokumentasi; ?></h3>
                   <p>Dokumentasi</p>
                 </div>
                 <div class="icon">
@@ -72,7 +72,7 @@
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3>150</h3>
+                  <h3><?php echo $total_data_harian; ?></h3>
                   <p>Data Harian</p>
                 </div>
                 <div class="icon">
@@ -85,7 +85,7 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+                  <h3><?php echo $total_biaya_operasional; ?></h3>
                   <p>Biaya Operasional</p>
                 </div>
                 <div class="icon">
@@ -98,7 +98,7 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>44</h3>
+                  <h3><?php echo $total_dokumentasi; ?></h3>
                   <p>Dokumentasi</p>
                 </div>
                 <div class="icon">
@@ -111,7 +111,7 @@
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>65</h3>
+                  <h3>6</h3>
                   <p>Cetak Laporan</p>
                 </div>
                 <div class="icon">

@@ -12,13 +12,13 @@ class Login_model extends CI_Model
      * @param string $email : This is email of the user
      * @param string $password : This is encrypted password of the user
      */
-    function loginMe($email, $password)
+    function loginMe($username, $password)
     {
-        $this->db->select('BaseTbl.userId, BaseTbl.password, BaseTbl.name, BaseTbl.isAdmin');
+        $this->db->select('BaseTbl.userId, BaseTbl.password, BaseTbl.nama, BaseTbl.username, BaseTbl.isAdmin');
         $this->db->from('user as BaseTbl');
         // $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
-        $this->db->where('BaseTbl.email', $email);
-        $this->db->where('BaseTbl.isDeleted', 0);
+        $this->db->where('BaseTbl.username', $username);
+        // $this->db->where('BaseTbl.isDeleted', 0);
         $query = $this->db->get();
         
         $user = $query->row();
@@ -77,7 +77,7 @@ class Login_model extends CI_Model
      */
     function getCustomerInfoByEmail($email)
     {
-        $this->db->select('userId, email, name');
+        $this->db->select('userId, email, nama');
         $this->db->from('user');
         $this->db->where('isDeleted', 0);
         $this->db->where('email', $email);

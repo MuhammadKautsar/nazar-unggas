@@ -13,12 +13,12 @@ class User_model extends CI_Model
      */
     function userListingCount($searchText)
     {
-        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, BaseTbl.isAdmin, BaseTbl.createdDtm');
+        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.nama, BaseTbl.phone, BaseTbl.username, BaseTbl.isAdmin');
         $this->db->from('user as BaseTbl');
         if(!empty($searchText)) {
             $likeCriteria = "(BaseTbl.email  LIKE '%".$searchText."%'
-                            OR  BaseTbl.name  LIKE '%".$searchText."%'
-                            OR  BaseTbl.mobile  LIKE '%".$searchText."%')";
+                            OR  BaseTbl.nama  LIKE '%".$searchText."%'
+                            OR  BaseTbl.phone  LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
         $query = $this->db->get();
@@ -35,17 +35,15 @@ class User_model extends CI_Model
      */
     function userListing($searchText, $page, $segment)
     {
-        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, BaseTbl.isAdmin, BaseTbl.createdDtm');
+        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.nama, BaseTbl.phone, BaseTbl.username, BaseTbl.isAdmin');
         $this->db->from('user as BaseTbl');
         // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId','left');
         if(!empty($searchText)) {
             $likeCriteria = "(BaseTbl.email  LIKE '%".$searchText."%'
-                            OR  BaseTbl.name  LIKE '%".$searchText."%'
-                            OR  BaseTbl.mobile  LIKE '%".$searchText."%')";
+                            OR  BaseTbl.nama  LIKE '%".$searchText."%'
+                            OR  BaseTbl.phone  LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
-        // $this->db->where('BaseTbl.isDeleted', 0);
-        // $this->db->where('BaseTbl.roleId !=', 1);
         $this->db->order_by('BaseTbl.userId', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
@@ -65,7 +63,7 @@ class User_model extends CI_Model
         $this->db->select("email");
         $this->db->from("user");
         $this->db->where("email", $email);   
-        $this->db->where("isDeleted", 0);
+        // $this->db->where("isDeleted", 0);
         if($userId != 0){
             $this->db->where("userId !=", $userId);
         }
@@ -97,9 +95,8 @@ class User_model extends CI_Model
      */
     function getUserInfo($userId)
     {
-        $this->db->select('userId, name, email, mobile, isAdmin');
+        $this->db->select('userId, nama, email, phone, username, isAdmin');
         $this->db->from('user');
-        $this->db->where('isDeleted', 0);
         $this->db->where('userId', $userId);
         $query = $this->db->get();
         
@@ -141,7 +138,7 @@ class User_model extends CI_Model
     {
         $this->db->select('userId, password');
         $this->db->where('userId', $userId);        
-        $this->db->where('isDeleted', 0);
+        // $this->db->where('isDeleted', 0);
         $query = $this->db->get('user');
         
         $user = $query->result();
@@ -165,7 +162,7 @@ class User_model extends CI_Model
     function changePassword($userId, $userInfo)
     {
         $this->db->where('userId', $userId);
-        $this->db->where('isDeleted', 0);
+        // $this->db->where('isDeleted', 0);
         $this->db->update('user', $userInfo);
         
         return $this->db->affected_rows();
@@ -178,9 +175,9 @@ class User_model extends CI_Model
      */
     function getUserInfoById($userId)
     {
-        $this->db->select('userId, name, email, mobile, roleId');
+        $this->db->select('userId, nama, email, phone, username');
         $this->db->from('user');
-        $this->db->where('isDeleted', 0);
+        // $this->db->where('isDeleted', 0);
         $this->db->where('userId', $userId);
         $query = $this->db->get();
         

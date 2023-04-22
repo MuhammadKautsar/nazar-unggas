@@ -1,10 +1,10 @@
 <?php
 $userId = $userInfo->userId;
-$name = $userInfo->name;
+$nama = $userInfo->nama;
 $email = $userInfo->email;
-$mobile = $userInfo->mobile;
-$roleId = $userInfo->roleId;
-$role = $userInfo->role;
+$phone = $userInfo->phone;
+// $roleId = $userInfo->roleId;
+// $role = $userInfo->role;
 ?>
 
 <div class="content-wrapper">
@@ -27,16 +27,18 @@ $role = $userInfo->role;
                 <div class="box box-warning">
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>assets/dist/img/avatar.png" alt="User profile picture">
-                        <h3 class="profile-username text-center"><?= $name ?></h3>
+                        <h3 class="profile-username text-center"><?= $nama ?></h3>
 
-                        <p class="text-muted text-center"><?= $role ?></p>
+                        <!-- <p class="text-muted text-center"><?= $role ?></p> -->
+                        <p class="text-muted text-center">Admin/Manajer</p>
+                        <p class="text-muted text-center"></p>
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Email</b> <a class="pull-right"><?= $email ?></a>
+                                <b>Username</b> <a class="pull-right"><?= $username ?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Mobile</b> <a class="pull-right"><?= $mobile ?></a>
+                                <b>Phone</b> <a class="pull-right"><?= $phone ?></a>
                             </li>
                         </ul>
                     </div>
@@ -59,7 +61,7 @@ $role = $userInfo->role;
                                         <div class="col-md-12">                                
                                             <div class="form-group">
                                                 <label for="fname">Full Name</label>
-                                                <input type="text" class="form-control" id="fname" name="fname" placeholder="<?php echo $name; ?>" value="<?php echo set_value('fname', $name); ?>" maxlength="128" />
+                                                <input type="text" class="form-control" id="fname" name="fname" placeholder="<?php echo $nama; ?>" value="<?php echo set_value('fname', $nama); ?>" maxlength="128" />
                                                 <input type="hidden" value="<?php echo $userId; ?>" name="userId" id="userId" />    
                                             </div>
                                         </div>
@@ -67,16 +69,16 @@ $role = $userInfo->role;
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="mobile">Mobile Number</label>
-                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="<?php echo $mobile; ?>" value="<?php echo set_value('mobile', $mobile); ?>" maxlength="10">
+                                                <label for="phone">Phone Number</label>
+                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="<?php echo $phone; ?>" value="<?php echo set_value('phone', $phone); ?>" maxlength="12">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="email">Email</label>
-                                                <input type="text" class="form-control" id="email" name="email" placeholder="<?php echo $email; ?>" value="<?php echo set_value('email', $email); ?>">
+                                                <label for="username">Username</label>
+                                                <input type="text" class="form-control" id="username" name="username" placeholder="<?php echo $username; ?>" value="<?php echo set_value('username', $username); ?>">
                                             </div>
                                         </div>
                                     </div>

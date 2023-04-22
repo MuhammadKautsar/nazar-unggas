@@ -119,13 +119,13 @@
                         {
                         ?>
                         <td class="text-center"><?php echo $i++; ?></td>
-                        <td class="text-center"><?php echo $record->iddokumentasi ?></td>
-                        <td class="text-center"><?php echo $record->iddokumentasi ?></td>
+                        <td class="text-center"><?php echo $record->jumlah_DOC ?></td>
                         <td class="text-center"><?php echo $record->jumlah_panen ?></td>
-                        <td class="text-center"><?php echo $record->jumlah_panen ?></td>
+                        <td class="text-center">12-02-2023</td>
                         <td class="text-center"><?php echo $record->tgl_panen ?></td>
                         <td class="text-center"><?php echo $record->sisa_pakan ?></td>
                         <td class="text-center"><?php echo $record->berat_ayam ?></td>
+                        <td class="text-center"><?php echo $record->periode_id ?></td>
                         <td class="text-center"><?php echo $record->jumlah_biaya ?></td>
                         <?php
                         } else {

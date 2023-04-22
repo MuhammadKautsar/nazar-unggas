@@ -44,7 +44,7 @@ class Login extends CI_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|max_length[128]|trim');
+        $this->form_validation->set_rules('username', 'Username', 'required|max_length[32]');
         $this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
         
         if($this->form_validation->run() == FALSE)
@@ -53,10 +53,10 @@ class Login extends CI_Controller
         }
         else
         {
-            $email = strtolower($this->security->xss_clean($this->input->post('email')));
+            $username = strtolower($this->security->xss_clean($this->input->post('username')));
             $password = $this->input->post('password');
             
-            $result = $this->login_model->loginMe($email, $password);
+            $result = $this->login_model->loginMe($username, $password);
 
             //pre($result); die;
             
@@ -73,12 +73,13 @@ class Login extends CI_Controller
                 // $accessInfo = $this->accessInfo($result->roleId);
 
                 $sessionArray = array('userId'=>$result->userId,
-                                        'role'=>$result->roleId,
-                                        'roleText'=>$result->role,
-                                        'name'=>$result->name,
+                                        // 'role'=>$result->roleId,
+                                        // 'roleText'=>$result->role,
+                                        'nama'=>$result->nama,
+                                        'username'=>$result->username,
                                         'isAdmin'=>$result->isAdmin,
-                                        'accessInfo'=>$accessInfo,
-                                        'lastLogin'=> $lastLogin->createdDtm,
+                                        // 'accessInfo'=>$accessInfo,
+                                        // 'lastLogin'=> $lastLogin->createdDtm,
                                         'isLoggedIn' => TRUE
                                 );
 
@@ -94,7 +95,7 @@ class Login extends CI_Controller
             }
             else
             {
-                $this->session->set_flashdata('error', 'Email or password mismatch');
+                $this->session->set_flashdata('error', 'Username or password mismatch');
                 redirect('login');
             }
         }

@@ -5,14 +5,15 @@
  * Base Class to control over all the classes
  */
 class BaseController extends CI_Controller {
-	protected $role = '';
+	// protected $role = '';
 	protected $vendorId = '';
-	protected $name = '';
-	protected $roleText = '';
+	protected $nama = '';
+	protected $username = '';
+	// protected $roleText = '';
 	protected $isAdmin = 0;
-	protected $accessInfo = [];
+	// protected $accessInfo = [];
 	protected $global = array ();
-	protected $lastLogin = '';
+	// protected $lastLogin = '';
 	protected $module = '';
 
 	/**
@@ -31,20 +32,22 @@ class BaseController extends CI_Controller {
 		if (! isset ( $isLoggedIn ) || $isLoggedIn != TRUE) {
 			redirect ( 'login' );
 		} else {
-			$this->role = $this->session->userdata ( 'role' );
+			// $this->role = $this->session->userdata ( 'role' );
 			$this->vendorId = $this->session->userdata ( 'userId' );
-			$this->name = $this->session->userdata ( 'name' );
-			$this->roleText = $this->session->userdata ( 'roleText' );
-			$this->lastLogin = $this->session->userdata ( 'lastLogin' );
+			$this->nama = $this->session->userdata ( 'nama' );
+			$this->username = $this->session->userdata ( 'username' );
+			// $this->roleText = $this->session->userdata ( 'roleText' );
+			// $this->lastLogin = $this->session->userdata ( 'lastLogin' );
 			$this->isAdmin = $this->session->userdata ( 'isAdmin' );
-			$this->accessInfo = $this->session->userdata ( 'accessInfo' );
+			// $this->accessInfo = $this->session->userdata ( 'accessInfo' );
 			
-			$this->global ['name'] = $this->name;
-			$this->global ['role'] = $this->role;
-			$this->global ['role_text'] = $this->roleText;
-			$this->global ['last_login'] = $this->lastLogin;
+			$this->global ['nama'] = $this->nama;
+			$this->global ['username'] = $this->username;
+			// $this->global ['role'] = $this->role;
+			// $this->global ['role_text'] = $this->roleText;
+			// $this->global ['last_login'] = $this->lastLogin;
 			$this->global ['is_admin'] = $this->isAdmin;
-			$this->global ['access_info'] = $this->accessInfo;
+			// $this->global ['access_info'] = $this->accessInfo;
 		}
 	}
 	

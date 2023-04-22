@@ -5,9 +5,6 @@ require APPPATH . '/libraries/BaseController.php';
 /**
  * Class : User (UserController)
  * User Class to control all user related operations.
- * @author : Kishor Mali
- * @version : 1.1
- * @since : 15 November 2016
  */
 class User extends BaseController
 {
@@ -26,9 +23,9 @@ class User extends BaseController
      */
     public function index()
     {
-        $this->global['pageTitle'] = 'Nazar Unggas : Dashboard';
+        // $this->global['pageTitle'] = 'Nazar Unggas : Dashboard';
         
-        $this->loadViews("general/dashboard", $this->global, NULL , NULL);
+        // $this->loadViews("general/dashboard", $this->global, NULL , NULL);
     }
     
     /**
@@ -282,7 +279,7 @@ class User extends BaseController
      */
     function profile($active = "details")
     {
-        $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);
+        $data["userInfo"] = $this->user_model->getUserInfoById($this->vendorId);
         $data["active"] = $active;
         
         $this->global['pageTitle'] = $active == "details" ? 'Nazar Unggas : My Profile' : 'Nazar Unggas : Change Password';
@@ -298,8 +295,8 @@ class User extends BaseController
         $this->load->library('form_validation');
             
         $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
-        $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
-        $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]|callback_emailExists');        
+        $this->form_validation->set_rules('phone','Phone Number','required|min_length[12]');
+        $this->form_validation->set_rules('username','Username','required');        
         
         if($this->form_validation->run() == FALSE)
         {
@@ -307,17 +304,17 @@ class User extends BaseController
         }
         else
         {
-            $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-            $mobile = $this->security->xss_clean($this->input->post('mobile'));
-            $email = strtolower($this->security->xss_clean($this->input->post('email')));
+            $nama = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+            $phone = $this->security->xss_clean($this->input->post('phone'));
+            $username = strtolower($this->security->xss_clean($this->input->post('username')));
             
-            $userInfo = array('name'=>$name, 'email'=>$email, 'mobile'=>$mobile, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+            $userInfo = array('nama'=>$nama, 'username'=>$username, 'phone'=>$phone);
             
             $result = $this->user_model->editUser($userInfo, $this->vendorId);
             
             if($result == true)
             {
-                $this->session->set_userdata('name', $name);
+                $this->session->set_userdata('nama', $nama);
                 $this->session->set_flashdata('success', 'Profile updated successfully');
             }
             else
@@ -359,8 +356,7 @@ class User extends BaseController
             }
             else
             {
-                $usersData = array('password'=>getHashedPassword($newPassword), 'updatedBy'=>$this->vendorId,
-                                'updatedDtm'=>date('Y-m-d H:i:s'));
+                $usersData = array('password'=>getHashedPassword($newPassword));
                 
                 $result = $this->user_model->changePassword($this->vendorId, $usersData);
                 

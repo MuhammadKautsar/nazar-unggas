@@ -58,7 +58,7 @@ $route['translate_uri_dashes'] = FALSE;
 /*********** USER DEFINED ROUTES *******************/
 
 $route['loginMe'] = 'login/loginMe';
-$route['dashboard'] = 'user';
+$route['dashboard'] = 'dashboard';
 $route['logout'] = 'user/logout';
 $route['userListing'] = 'user/userListing';
 $route['userListing/(:num)'] = "user/userListing/$1";
