@@ -52,9 +52,11 @@ class DataHarian extends BaseController
      */
     function add()
     {
+        $data['periodes'] = $this->dhm->getDataPeriodes();
+
         $this->global['pageTitle'] = 'Nazar Unggas : Tambah Data Harian Baru';
 
-        $this->loadViews("data_harian/add", $this->global, NULL, NULL);
+        $this->loadViews("data_harian/add", $this->global, $data, NULL);
     }
     
     /**
@@ -108,7 +110,8 @@ class DataHarian extends BaseController
         {
             redirect('periode/periodeListing');
         }
-            
+        
+        $data['periodes'] = $this->dhm->getDataPeriodes();
         $data['dataHarianInfo'] = $this->dhm->getDataHarianInfo($dataHarianId);
 
         $this->global['pageTitle'] = 'Nazar Unggas : Ubah Data Harian';

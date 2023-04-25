@@ -39,7 +39,19 @@ $periode_id = $biayaOperasionalInfo->periode_id;
                                     </div>                              
                                     <div class="form-group">
                                         <label for="kebutuhan_id">Jenis Kebutuhan</label>
-                                        <input type="number" class="form-control required" value="<?php echo $kebutuhan_id; ?>" id="kebutuhan_id" name="kebutuhan_id" maxlength="256" />
+                                        <select class="form-control required" id="kebutuhan_id" name="kebutuhan_id">
+                                            <?php
+                                            if(!empty($kebutuhans))
+                                            {
+                                                foreach ($kebutuhans as $kb)
+                                                {
+                                                    ?>
+                                                    <option value="<?php echo $kb->idkebutuhan ?>" <?php if ($kebutuhan_id == $kb->idkebutuhan) { echo ' selected="selected"'; } ?>><?= $kb->nama_kebutuhan ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="harga">Harga</label>
@@ -47,7 +59,19 @@ $periode_id = $biayaOperasionalInfo->periode_id;
                                     </div>
                                     <div class="form-group">
                                         <label for="periode_id">Periode</label>
-                                        <input type="number" class="form-control required" value="<?php echo $periode_id; ?>" id="periode_id" name="periode_id" maxlength="256" />
+                                        <?php
+                                            if(!empty($periodes))
+                                            {
+                                                foreach ($periodes as $pr)
+                                                {
+                                                    if ($pr->status == 'Aktif') {
+                                                        ?>
+                                                        <input type="number" class="form-control required" value="<?php echo $pr->idperiode ?>" id="periode_id" name="periode_id" readonly />
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                             </div>

@@ -27,10 +27,12 @@ class BiayaOperasional_model extends CI_Model
      */
     function biayaOperasionalListing($searchText, $page, $segment)
     {
-        // $this->db->select('BaseTbl.iddata, BaseTbl.minggu_ke, BaseTbl.tanggal, BaseTbl.umur');
+        $this->db->select('BaseTbl.idbiaya, BaseTbl.tanggal, BaseTbl.kebutuhan_id, BaseTbl.harga, BaseTbl.periode_id,
+        Kebutuhan.nama_kebutuhan');
         $this->db->from('biaya_operasional as BaseTbl');
+        $this->db->join('kebutuhan as Kebutuhan', 'Kebutuhan.idkebutuhan = BaseTbl.kebutuhan_id','left');
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.status LIKE '%".$searchText."%')";
+            $likeCriteria = "(BaseTbl.harga LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
         $this->db->order_by('BaseTbl.idbiaya', 'DESC');
@@ -72,5 +74,23 @@ class BiayaOperasional_model extends CI_Model
         $this->db->update('biaya_operasional', $biayaOperasionalInfo);
         
         return TRUE;
+    }
+
+    function getDataKebutuhans()
+    {
+        $this->db->select('idkebutuhan, nama_kebutuhan');
+        $this->db->from('kebutuhan');
+        $query = $this->db->get();
+        
+        return $query->result();
+    }
+
+    function getDataPeriodes()
+    {
+        $this->db->select('idperiode, tanggal_mulai, jumlah_doc, status');
+        $this->db->from('periode');
+        $query = $this->db->get();
+        
+        return $query->result();
     }
 }

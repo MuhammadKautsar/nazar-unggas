@@ -13,10 +13,10 @@ class User_model extends CI_Model
      */
     function userListingCount($searchText)
     {
-        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.nama, BaseTbl.phone, BaseTbl.username, BaseTbl.isAdmin');
+        $this->db->select('BaseTbl.userId, BaseTbl.nama, BaseTbl.phone, BaseTbl.username, BaseTbl.level');
         $this->db->from('user as BaseTbl');
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.email  LIKE '%".$searchText."%'
+            $likeCriteria = "(BaseTbl.username  LIKE '%".$searchText."%'
                             OR  BaseTbl.nama  LIKE '%".$searchText."%'
                             OR  BaseTbl.phone  LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
@@ -35,11 +35,10 @@ class User_model extends CI_Model
      */
     function userListing($searchText, $page, $segment)
     {
-        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.nama, BaseTbl.phone, BaseTbl.username, BaseTbl.isAdmin');
+        $this->db->select('BaseTbl.userId, BaseTbl.nama, BaseTbl.phone, BaseTbl.username, BaseTbl.level');
         $this->db->from('user as BaseTbl');
-        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId','left');
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.email  LIKE '%".$searchText."%'
+            $likeCriteria = "(BaseTbl.username  LIKE '%".$searchText."%'
                             OR  BaseTbl.nama  LIKE '%".$searchText."%'
                             OR  BaseTbl.phone  LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
@@ -95,7 +94,7 @@ class User_model extends CI_Model
      */
     function getUserInfo($userId)
     {
-        $this->db->select('userId, nama, email, phone, username, isAdmin');
+        $this->db->select('userId, nama, phone, username, level');
         $this->db->from('user');
         $this->db->where('userId', $userId);
         $query = $this->db->get();
@@ -175,7 +174,7 @@ class User_model extends CI_Model
      */
     function getUserInfoById($userId)
     {
-        $this->db->select('userId, nama, email, phone, username');
+        $this->db->select('userId, nama, phone, username');
         $this->db->from('user');
         // $this->db->where('isDeleted', 0);
         $this->db->where('userId', $userId);

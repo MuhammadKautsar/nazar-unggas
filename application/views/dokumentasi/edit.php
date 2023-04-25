@@ -37,7 +37,19 @@ $periode_id = $dokumentasiInfo->periode_id;
                                     <input type="hidden" value="<?php echo $dokumentasiId; ?>" name="iddokumentasi" id="dokumentasiId" />                              
                                     <div class="form-group">
                                         <label for="jumlah_doc">Jumlah DOC</label>
-                                        <input type="number" class="form-control required" value="" id="jumlah_doc" name="jumlah_doc" maxlength="256" />
+                                        <?php
+                                            if(!empty($periodes))
+                                            {
+                                                foreach ($periodes as $pr)
+                                                {
+                                                    if ($pr->status == 'Aktif') {
+                                                        ?>
+                                                        <input type="number" class="form-control required" value="<?php echo $pr->jumlah_doc ?>" id="jumlah_doc" name="jumlah_doc" readonly />
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                        ?>
                                     </div>
                                     <div class="form-group">
                                         <label for="jumlah_panen">Jumlah Panen</label>
@@ -45,7 +57,19 @@ $periode_id = $dokumentasiInfo->periode_id;
                                     </div>
                                     <div class="form-group">
                                         <label for="tanggal_mulai">Tanggal Mulai</label>
-                                        <input type="date" class="form-control required" value="" id="tanggal_mulai" name="tanggal_mulai" maxlength="256" />
+                                        <?php
+                                            if(!empty($periodes))
+                                            {
+                                                foreach ($periodes as $pr)
+                                                {
+                                                    if ($pr->status == 'Aktif') {
+                                                        ?>
+                                                        <input type="date" class="form-control required" value="<?php echo $pr->tanggal_mulai ?>" id="tanggal_mulai" name="tanggal_mulai" readonly />
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                        ?>
                                     </div>
                                     <div class="form-group">
                                         <label for="tgl_panen">Tanggal Panen</label>
@@ -67,7 +91,19 @@ $periode_id = $dokumentasiInfo->periode_id;
                                     </div>
                                     <div class="form-group">
                                         <label for="periode_id">Periode</label>
-                                        <input type="number" class="form-control required" value="<?php echo $periode_id; ?>" id="periode_id" name="periode_id" maxlength="256" />
+                                        <?php
+                                            if(!empty($periodes))
+                                            {
+                                                foreach ($periodes as $pr)
+                                                {
+                                                    if ($pr->status == 'Aktif') {
+                                                        ?>
+                                                        <input type="number" class="form-control required" value="<?php echo $pr->idperiode ?>" id="periode_id" name="periode_id" readonly />
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                             </div>

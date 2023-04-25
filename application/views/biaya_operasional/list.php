@@ -71,6 +71,7 @@
                         <th>Periode</th>
                         <th class="text-center">Aksi</th>
                     </tr>
+                    <?php $i = 1; ?>
                     <?php
                     if(!empty($records))
                     {
@@ -78,9 +79,9 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo $record->idbiaya ?></td>
+                        <td><?php echo $i++; ?></td>
                         <td><?php echo $record->tanggal ?></td>
-                        <td><?php echo $record->kebutuhan_id ?></td>
+                        <td><?php echo $record->nama_kebutuhan ?></td>
                         <td><?php echo $record->harga ?></td>
                         <td><?php echo $record->periode_id ?></td>
                         <td class="text-center">

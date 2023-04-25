@@ -75,6 +75,7 @@
                         <th>Periode</th>
                         <th class="text-center">Aksi</th>
                     </tr>
+                    <?php $i = 1; ?>
                     <?php
                     if(!empty($records))
                     {
@@ -82,7 +83,7 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo $record->iddata ?></td>
+                        <td><?php echo $i++; ?></td>
                         <td><?php echo $record->minggu_ke ?></td>
                         <td><?php echo $record->tanggal ?></td>
                         <td><?php echo $record->umur ?></td>

@@ -85,8 +85,14 @@
                         <td><?php echo $record->jumlah_doc ?></td>
                         <td><?php echo $record->status ?></td>
                         <td class="text-center">
-                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'periode/edit/'.$record->idperiode; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('periode/delete/'.$record->idperiode); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></a>
+                            <?php
+                                if ($record->status == 'Aktif') {
+                                    ?>
+                                    <a class="btn btn-sm btn-info" href="<?php echo base_url().'periode/edit/'.$record->idperiode; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                                    <a class="btn btn-danger btn-sm" href="<?php echo base_url('periode/delete/'.$record->idperiode); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></a>
+                                    <?php
+                                }
+                            ?>
                         </td>
                     </tr>
                     <?php

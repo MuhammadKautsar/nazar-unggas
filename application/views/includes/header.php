@@ -93,7 +93,7 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu" data-widget="tree">
             <?php
-            if($is_admin == 1)
+            if($le_vel == 1)
             {
             ?>
             <li class="header text-center">ADMIN</li>
@@ -110,7 +110,7 @@
               </a>
             </li>
             <?php
-            if($is_admin == 1)
+            if($le_vel == 1)
             {
             ?>
             <li>
@@ -141,7 +141,7 @@
             }
             ?>
             <?php
-            if($is_admin != 1)
+            if($le_vel != 1)
             {
             ?>
             <li>

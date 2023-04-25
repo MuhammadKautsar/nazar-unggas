@@ -34,8 +34,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">Email address</label>
-                                        <input type="text" class="form-control required email" id="email" value="<?php echo set_value('email'); ?>" name="email" maxlength="128">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control required username" id="username" value="<?php echo set_value('username'); ?>" name="username" maxlength="128">
                                     </div>
                                 </div>
                             </div>
@@ -56,10 +56,19 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="mobile">Mobile Number</label>
-                                        <input type="text" class="form-control required digits" id="mobile" value="<?php echo set_value('mobile'); ?>" name="mobile" maxlength="10">
+                                        <label for="phone">Phone Number</label>
+                                        <input type="number" class="form-control required digits" id="phone" value="<?php echo set_value('phone'); ?>" name="phone" maxlength="12">
                                     </div>
                                 </div>
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="isAdmin">User Type</label>
+                                        <select class="form-control required" id="isAdmin" name="isAdmin">
+                                            <option value="<?= REGULAR_USER ?>">Regular User</option>
+                                            <option value="<?= SYSTEM_ADMIN ?>">System Administrator</option>
+                                        </select>
+                                    </div>
+                                </div> -->
                                 <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="role">Role</label>
@@ -85,19 +94,6 @@
                                         </select>
                                     </div>
                                 </div>     -->
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="isAdmin">User Type</label>
-                                        <select class="form-control required" id="isAdmin" name="isAdmin">
-                                            <option value="<?= REGULAR_USER ?>">Regular User</option>
-                                            <option value="<?= SYSTEM_ADMIN ?>">System Administrator</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                </div>
                             </div> 
                         </div><!-- /.box-body -->
     

@@ -67,7 +67,6 @@ $route['addNewUser'] = "user/addNewUser";
 $route['editOld'] = "user/editOld";
 $route['editOld/(:num)'] = "user/editOld/$1";
 $route['editUser'] = "user/editUser";
-$route['deleteUser'] = "user/deleteUser";
 $route['profile'] = "user/profile";
 $route['profile/(:any)'] = "user/profile/$1";
 $route['profileUpdate'] = "user/profileUpdate";
@@ -86,12 +85,10 @@ $route['resetPasswordConfirmUser/(:any)'] = "login/resetPasswordConfirmUser/$1";
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = "login/resetPasswordConfirmUser/$1/$2";
 $route['createPasswordUser'] = "login/createPasswordUser";
 
+$route['user/delete/(:num)'] = 'User/delete/$1';
 $route['periode/delete/(:num)'] = 'Periode/delete/$1';
-
 $route['dataHarian/delete/(:num)'] = 'DataHarian/delete/$1';
-
 $route['biayaOperasional/delete/(:num)'] = 'BiayaOperasional/delete/$1';
-
 $route['dokumentasi/delete/(:num)'] = 'Dokumentasi/delete/$1';
 
 /* End of file routes.php */

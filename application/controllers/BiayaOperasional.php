@@ -52,9 +52,12 @@ class BiayaOperasional extends BaseController
      */
     function add()
     {
+        $data['kebutuhans'] = $this->bom->getDataKebutuhans();
+        $data['periodes'] = $this->bom->getDataPeriodes();
+
         $this->global['pageTitle'] = 'Nazar Unggas : Tambah Biaya Operasional Baru';
 
-        $this->loadViews("biaya_operasional/add", $this->global, NULL, NULL);
+        $this->loadViews("biaya_operasional/add", $this->global, $data, NULL);
     }
     
     /**
@@ -101,6 +104,8 @@ class BiayaOperasional extends BaseController
             redirect('biayaOperasional/biayaOperasionalListing');
         }
         
+        $data['kebutuhans'] = $this->bom->getDataKebutuhans();
+        $data['periodes'] = $this->bom->getDataPeriodes();
         $data['biayaOperasionalInfo'] = $this->bom->getbiayaOperasionalInfo($periodeId);
 
         $this->global['pageTitle'] = 'Nazar Unggas : Ubah Biaya Operasional';

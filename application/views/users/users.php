@@ -84,7 +84,7 @@
                         <td><?php echo $record->phone ?></td>
                         <td class="text-center"> 
                             <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOld/'.$record->userId; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="<?php echo $record->userId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('user/delete/'.$record->userId); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php

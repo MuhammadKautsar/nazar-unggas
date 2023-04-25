@@ -52,9 +52,11 @@ class Dokumentasi extends BaseController
      */
     function add()
     {
+        $data['periodes'] = $this->dm->getDataPeriodes();
+
         $this->global['pageTitle'] = 'Nazar Unggas : Tambah Periode Baru';
 
-        $this->loadViews("dokumentasi/add", $this->global, NULL, NULL);
+        $this->loadViews("dokumentasi/add", $this->global, $data, NULL);
     }
     
     /**
@@ -105,6 +107,7 @@ class Dokumentasi extends BaseController
             redirect('dokumentasi/dokumentasiListing');
         }
         
+        $data['periodes'] = $this->dm->getDataPeriodes();
         $data['dokumentasiInfo'] = $this->dm->getDokumentasiInfo($dokumentasiId);
 
         $this->global['pageTitle'] = 'Nazar Unggas : Ubah Dokumentasi';

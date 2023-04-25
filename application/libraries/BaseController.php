@@ -5,15 +5,11 @@
  * Base Class to control over all the classes
  */
 class BaseController extends CI_Controller {
-	// protected $role = '';
 	protected $vendorId = '';
 	protected $nama = '';
 	protected $username = '';
-	// protected $roleText = '';
-	protected $isAdmin = 0;
-	// protected $accessInfo = [];
+	protected $level = 0;
 	protected $global = array ();
-	// protected $lastLogin = '';
 	protected $module = '';
 
 	/**
@@ -32,33 +28,14 @@ class BaseController extends CI_Controller {
 		if (! isset ( $isLoggedIn ) || $isLoggedIn != TRUE) {
 			redirect ( 'login' );
 		} else {
-			// $this->role = $this->session->userdata ( 'role' );
 			$this->vendorId = $this->session->userdata ( 'userId' );
 			$this->nama = $this->session->userdata ( 'nama' );
 			$this->username = $this->session->userdata ( 'username' );
-			// $this->roleText = $this->session->userdata ( 'roleText' );
-			// $this->lastLogin = $this->session->userdata ( 'lastLogin' );
-			$this->isAdmin = $this->session->userdata ( 'isAdmin' );
-			// $this->accessInfo = $this->session->userdata ( 'accessInfo' );
+			$this->level = $this->session->userdata ( 'level' );
 			
 			$this->global ['nama'] = $this->nama;
 			$this->global ['username'] = $this->username;
-			// $this->global ['role'] = $this->role;
-			// $this->global ['role_text'] = $this->roleText;
-			// $this->global ['last_login'] = $this->lastLogin;
-			$this->global ['is_admin'] = $this->isAdmin;
-			// $this->global ['access_info'] = $this->accessInfo;
-		}
-	}
-	
-	/**
-	 * This function is used to check the access
-	 */
-	function isAdmin() {
-		if ($this->isAdmin == SYSTEM_ADMIN) {
-			return true;
-		} else {
-			return false;
+			$this->global ['le_vel'] = $this->level;
 		}
 	}
 	

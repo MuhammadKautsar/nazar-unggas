@@ -32,31 +32,24 @@ class User extends BaseController
      * This function is used to load the user list
      */
     function userListing()
-    {
-        if(!$this->isAdmin())
-        {
-            $this->loadThis();
+    { 
+        $searchText = '';
+        if(!empty($this->input->post('searchText'))) {
+            $searchText = $this->security->xss_clean($this->input->post('searchText'));
         }
-        else
-        {        
-            $searchText = '';
-            if(!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
-            }
-            $data['searchText'] = $searchText;
-            
-            $this->load->library('pagination');
-            
-            $count = $this->user_model->userListingCount($searchText);
+        $data['searchText'] = $searchText;
+        
+        $this->load->library('pagination');
+        
+        $count = $this->user_model->userListingCount($searchText);
 
-			$returns = $this->paginationCompress ( "userListing/", $count, 10 );
-            
-            $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
-            
-            $this->global['pageTitle'] = 'Nazar Unggas : User Listing';
-            
-            $this->loadViews("users/users", $this->global, $data, NULL);
-        }
+        $returns = $this->paginationCompress ( "userListing/", $count, 10 );
+        
+        $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
+        
+        $this->global['pageTitle'] = 'Nazar Unggas : User Listing';
+        
+        $this->loadViews("users/users", $this->global, $data, NULL);
     }
 
     /**
@@ -64,19 +57,11 @@ class User extends BaseController
      */
     function addNew()
     {
-        if(!$this->isAdmin())
-        {
-            $this->loadThis();
-        }
-        else
-        {
-            $this->load->model('user_model');
-            // $data['roles'] = $this->user_model->getUserRoles();
+        $this->load->model('user_model');
             
-            $this->global['pageTitle'] = 'Nazar Unggas : Add New User';
+        $this->global['pageTitle'] = 'Nazar Unggas : Add New User';
 
-            $this->loadViews("users/addNew", $this->global, NULL);
-        }
+        $this->loadViews("users/addNew", $this->global, NULL);
     }
 
     /**
@@ -102,49 +87,40 @@ class User extends BaseController
      */
     function addNewUser()
     {
-        if(!$this->isAdmin())
+        $this->load->library('form_validation');
+            
+        $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
+        $this->form_validation->set_rules('username','Username','required');
+        $this->form_validation->set_rules('password','Password','required|max_length[20]');
+        $this->form_validation->set_rules('cpassword','Confirm Password','trim|required|matches[password]|max_length[20]');
+        $this->form_validation->set_rules('phone','Phone Number','required|min_length[12]');
+        
+        if($this->form_validation->run() == FALSE)
         {
-            $this->loadThis();
+            $this->addNew();
         }
         else
         {
-            $this->load->library('form_validation');
+            $nama = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+            $username = strtolower($this->security->xss_clean($this->input->post('username')));
+            $password = $this->input->post('password');
+            $phone = $this->security->xss_clean($this->input->post('phone'));
+            // $isAdmin = $this->input->post('isAdmin');
+            $level = 2;
             
-            $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
-            $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]');
-            $this->form_validation->set_rules('password','Password','required|max_length[20]');
-            $this->form_validation->set_rules('cpassword','Confirm Password','trim|required|matches[password]|max_length[20]');
-            // $this->form_validation->set_rules('role','Role','trim|required|numeric');
-            $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
+            $userInfo = array('username'=>$username, 'password'=>getHashedPassword($password),
+                    'nama'=> $nama, 'phone'=>$phone, 'level'=>$level);
             
-            if($this->form_validation->run() == FALSE)
-            {
-                $this->addNew();
+            $this->load->model('user_model');
+            $result = $this->user_model->addNewUser($userInfo);
+            
+            if($result > 0){
+                $this->session->set_flashdata('success', 'New User created successfully');
+            } else {
+                $this->session->set_flashdata('error', 'User creation failed');
             }
-            else
-            {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
-                $password = $this->input->post('password');
-                // $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
-                $isAdmin = $this->input->post('isAdmin');
-                
-                $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password),
-                        'name'=> $name, 'mobile'=>$mobile, 'isAdmin'=>$isAdmin,
-                        'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
-                
-                $this->load->model('user_model');
-                $result = $this->user_model->addNewUser($userInfo);
-                
-                if($result > 0){
-                    $this->session->set_flashdata('success', 'New User created successfully');
-                } else {
-                    $this->session->set_flashdata('error', 'User creation failed');
-                }
-                
-                redirect('addNew');
-            }
+            
+            redirect('userListing');
         }
     }
 
@@ -155,24 +131,16 @@ class User extends BaseController
      */
     function editOld($userId = NULL)
     {
-        if(!$this->isAdmin())
+        if($userId == null)
         {
-            $this->loadThis();
+            redirect('userListing');
         }
-        else
-        {
-            if($userId == null)
-            {
-                redirect('userListing');
-            }
-            
-            // $data['roles'] = $this->user_model->getUserRoles();
-            $data['userInfo'] = $this->user_model->getUserInfo($userId);
+        
+        $data['userInfo'] = $this->user_model->getUserInfo($userId);
 
-            $this->global['pageTitle'] = 'Nazar Unggas : Edit User';
-            
-            $this->loadViews("users/editOld", $this->global, $data, NULL);
-        }
+        $this->global['pageTitle'] = 'Nazar Unggas : Edit User';
+        
+        $this->loadViews("users/editOld", $this->global, $data, NULL);
     }
     
     
@@ -181,63 +149,53 @@ class User extends BaseController
      */
     function editUser()
     {
-        if(!$this->isAdmin())
+        $this->load->library('form_validation');
+            
+        $userId = $this->input->post('userId');
+        
+        $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
+        $this->form_validation->set_rules('username','Username','required');
+        $this->form_validation->set_rules('password','Password','matches[cpassword]|max_length[20]');
+        $this->form_validation->set_rules('cpassword','Confirm Password','matches[password]|max_length[20]');
+        $this->form_validation->set_rules('phone','Phone Number','required|min_length[12]');
+        
+        if($this->form_validation->run() == FALSE)
         {
-            $this->loadThis();
+            $this->editOld($userId);
         }
         else
         {
-            $this->load->library('form_validation');
+            $nama = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+            $username = strtolower($this->security->xss_clean($this->input->post('username')));
+            $password = $this->input->post('password');
+            $phone = $this->security->xss_clean($this->input->post('phone'));
+            // $isAdmin = $this->input->post('isAdmin');
+            $level = 2;
             
-            $userId = $this->input->post('userId');
+            $userInfo = array();
             
-            $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
-            $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]');
-            $this->form_validation->set_rules('password','Password','matches[cpassword]|max_length[20]');
-            $this->form_validation->set_rules('cpassword','Confirm Password','matches[password]|max_length[20]');
-            // $this->form_validation->set_rules('role','Role','trim|required|numeric');
-            $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
-            
-            if($this->form_validation->run() == FALSE)
+            if(empty($password))
             {
-                $this->editOld($userId);
+                $userInfo = array('username'=>$username, 'nama'=> $nama, 'phone'=>$phone, 'level'=>$level);
             }
             else
             {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
-                $password = $this->input->post('password');
-                // $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
-                $isAdmin = $this->input->post('isAdmin');
-                
-                $userInfo = array();
-                
-                if(empty($password))
-                {
-                    $userInfo = array('email'=>$email, 'name'=>$name, 'mobile'=>$mobile,
-                        'isAdmin'=>$isAdmin, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
-                }
-                else
-                {
-                    $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password),
-                        'name'=>ucwords($name), 'mobile'=>$mobile, 'isAdmin'=>$isAdmin, 
-                        'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
-                }
-                
-                $result = $this->user_model->editUser($userInfo, $userId);
-                
-                if($result == true)
-                {
-                    $this->session->set_flashdata('success', 'User updated successfully');
-                }
-                else
-                {
-                    $this->session->set_flashdata('error', 'User updation failed');
-                }
-                
-                redirect('userListing');
+                $userInfo = array('username'=>$username, 'password'=>getHashedPassword($password),
+                    'nama'=> $nama, 'phone'=>$phone, 'level'=>$level);
             }
+            
+            $result = $this->user_model->editUser($userInfo, $userId);
+            
+            if($result == true)
+            {
+                $this->session->set_flashdata('success', 'User updated successfully');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'User updation failed');
+            }
+            
+            redirect('userListing');
         }
     }
 
@@ -246,22 +204,15 @@ class User extends BaseController
      * This function is used to delete the user using userId
      * @return boolean $result : TRUE / FALSE
      */
-    function deleteUser()
+    public function delete($id)
     {
-        if(!$this->isAdmin())
-        {
-            echo(json_encode(array('status'=>'access')));
-        }
-        else
-        {
-            $userId = $this->input->post('userId');
-            $userInfo = array('isDeleted'=>1,'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
-            
-            $result = $this->user_model->deleteUser($userId, $userInfo);
-            
-            if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
-            else { echo(json_encode(array('status'=>FALSE))); }
-        }
+        // Hapus data dari database
+        $this->db->where('userId', $id);
+        $this->db->delete('user');
+
+        // Tampilkan pesan berhasil dihapus dan kembali ke halaman sebelumnya
+        $this->session->set_flashdata('success', 'Data berhasil dihapus.');
+        redirect($_SERVER['HTTP_REFERER']);
     }
     
     /**

@@ -62,34 +62,14 @@ class Login extends CI_Controller
             
             if (!empty($result))
             {
-                // if ($result->isAdmin != SYSTEM_ADMIN && ($result->roleStatus == 2 || $result->isRoleDeleted == 1))
-                // {
-                //     $this->session->set_flashdata('error', 'The user doesn\'t have any role or the role is deactivated');
-                //     redirect('login');
-                // }
-
-                // $lastLogin = $this->login_model->lastLoginInfo($result->userId);
-
-                // $accessInfo = $this->accessInfo($result->roleId);
-
                 $sessionArray = array('userId'=>$result->userId,
-                                        // 'role'=>$result->roleId,
-                                        // 'roleText'=>$result->role,
                                         'nama'=>$result->nama,
                                         'username'=>$result->username,
-                                        'isAdmin'=>$result->isAdmin,
-                                        // 'accessInfo'=>$accessInfo,
-                                        // 'lastLogin'=> $lastLogin->createdDtm,
+                                        'level'=>$result->level,
                                         'isLoggedIn' => TRUE
                                 );
 
                 $this->session->set_userdata($sessionArray);
-
-                // unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin'], $sessionArray['accessInfo']);
-
-                // $loginInfo = array("userId"=>$result->userId, "sessionData" => json_encode($sessionArray), "machineIp"=>$_SERVER['REMOTE_ADDR'], "userAgent"=>getBrowserAgent(), "agentString"=>$this->agent->agent_string(), "platform"=>$this->agent->platform());
-
-                // $this->login_model->lastLogin($loginInfo);
                 
                 redirect('/dashboard');
             }

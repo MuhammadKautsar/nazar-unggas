@@ -1,9 +1,9 @@
 <?php
 $userId = $userInfo->userId;
 $nama = $userInfo->nama;
-$email = $userInfo->email;
+$username = $userInfo->username;
 $phone = $userInfo->phone;
-$isAdmin = $userInfo->isAdmin;
+$level = $userInfo->level;
 ?>
 
 <div class="content-wrapper">
@@ -43,8 +43,8 @@ $isAdmin = $userInfo->isAdmin;
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">Email address</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" value="<?php echo $email; ?>" maxlength="128">
+                                        <label for="username">Username</label>
+                                        <input type="username" class="form-control" id="username" placeholder="Enter username" name="username" value="<?php echo $username; ?>" maxlength="128">
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ $isAdmin = $userInfo->isAdmin;
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="phone">Phone Number</label>
-                                        <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="<?php echo $phone; ?>" maxlength="10">
+                                        <input type="number" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="<?php echo $phone; ?>" maxlength="12">
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-6">
@@ -95,19 +95,6 @@ $isAdmin = $userInfo->isAdmin;
                                     </div>
                                 </div>  -->
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="isAdmin">User Type</label>
-                                        <select class="form-control required" id="isAdmin" name="isAdmin">
-                                            <option value="<?= REGULAR_USER ?>" <?php if($isAdmin == REGULAR_USER) {echo "selected=selected";} ?>>Regular User</option>
-                                            <option value="<?= SYSTEM_ADMIN ?>" <?php if($isAdmin == SYSTEM_ADMIN) {echo "selected=selected";} ?>>System Administrator</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                </div>
-                            </div> 
                         </div><!-- /.box-body -->
     
                         <div class="box-footer">

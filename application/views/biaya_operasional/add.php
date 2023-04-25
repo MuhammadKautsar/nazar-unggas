@@ -26,19 +26,44 @@
                                 <div class="col-md-8">  
                                     <div class="form-group">
                                         <label for="tanggal">Tanggal</label>
-                                        <input type="date" class="form-control required" value="<?php echo set_value('tanggal'); ?>" id="tanggal" name="tanggal" maxlength="256" />
+                                        <input type="date" class="form-control required" value="<?php echo set_value('tanggal'); ?>" id="tanggal" name="tanggal" />
                                     </div>                              
                                     <div class="form-group">
                                         <label for="kebutuhan_id">Jenis Kebutuhan</label>
-                                        <input type="number" class="form-control required" value="<?php echo set_value('kebutuhan_id'); ?>" id="kebutuhan_id" name="kebutuhan_id" maxlength="256" />
+                                        <select class="form-control required" id="kebutuhan_id" name="kebutuhan_id">
+                                            <option value="">-Pilih-</option>
+                                            <?php
+                                            if(!empty($kebutuhans))
+                                            {
+                                                foreach ($kebutuhans as $kb)
+                                                {
+                                                    ?>
+                                                    <option value="<?php echo $kb->idkebutuhan ?>"><?= $kb->nama_kebutuhan ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="harga">Harga</label>
-                                        <input type="number" class="form-control required" value="<?php echo set_value('harga'); ?>" id="harga" name="harga" maxlength="256" />
+                                        <input type="number" class="form-control required" value="<?php echo set_value('harga'); ?>" id="harga" name="harga" maxlength="11" />
                                     </div>
                                     <div class="form-group">
                                         <label for="periode_id">Periode</label>
-                                        <input type="number" class="form-control required" value="<?php echo set_value('periode_id'); ?>" id="periode_id" name="periode_id" maxlength="256" />
+                                        <?php
+                                            if(!empty($periodes))
+                                            {
+                                                foreach ($periodes as $pr)
+                                                {
+                                                    if ($pr->status == 'Aktif') {
+                                                        ?>
+                                                        <input type="number" class="form-control required" value="<?php echo $pr->idperiode ?>" id="periode_id" name="periode_id" readonly />
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                             </div>

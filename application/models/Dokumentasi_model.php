@@ -28,10 +28,12 @@ class Dokumentasi_model extends CI_Model
      */
     function dokumentasiListing($searchText, $page, $segment)
     {
-        // $this->db->select('BaseTbl.iddokumentasi, BaseTbl.tanggal_mulai, BaseTbl.jumlah_doc, BaseTbl.status');
+        $this->db->select('BaseTbl.iddokumentasi, BaseTbl.jumlah_panen, BaseTbl.tgl_panen, BaseTbl.sisa_pakan, BaseTbl.berat_ayam, BaseTbl.jumlah_biaya, BaseTbl.periode_id,
+        Periode.jumlah_doc, Periode.tanggal_mulai');
         $this->db->from('dokumentasi as BaseTbl');
+        $this->db->join('periode as Periode', 'Periode.idperiode = BaseTbl.periode_id','left');
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.status LIKE '%".$searchText."%')";
+            $likeCriteria = "(BaseTbl.jumlah_panen LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
         $this->db->order_by('BaseTbl.iddokumentasi', 'DESC');
@@ -73,5 +75,14 @@ class Dokumentasi_model extends CI_Model
         $this->db->update('dokumentasi', $dokumentasiInfo);
         
         return TRUE;
+    }
+
+    function getDataPeriodes()
+    {
+        $this->db->select('idperiode, tanggal_mulai, jumlah_doc, status');
+        $this->db->from('periode');
+        $query = $this->db->get();
+        
+        return $query->result();
     }
 }

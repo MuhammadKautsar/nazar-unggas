@@ -1,10 +1,8 @@
 <?php
 $userId = $userInfo->userId;
 $nama = $userInfo->nama;
-$email = $userInfo->email;
+$username = $userInfo->username;
 $phone = $userInfo->phone;
-// $roleId = $userInfo->roleId;
-// $role = $userInfo->role;
 ?>
 
 <div class="content-wrapper">
@@ -29,8 +27,6 @@ $phone = $userInfo->phone;
                         <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>assets/dist/img/avatar.png" alt="User profile picture">
                         <h3 class="profile-username text-center"><?= $nama ?></h3>
 
-                        <!-- <p class="text-muted text-center"><?= $role ?></p> -->
-                        <p class="text-muted text-center">Admin/Manajer</p>
                         <p class="text-muted text-center"></p>
 
                         <ul class="list-group list-group-unbordered">

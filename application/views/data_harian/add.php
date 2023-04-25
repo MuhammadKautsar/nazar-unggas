@@ -57,7 +57,22 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="periode_id">Periode</label>
-                                        <input type="number" class="form-control required" value="<?php echo set_value('periode_id'); ?>" id="periode_id" name="periode_id" maxlength="256" />
+                                        <select class="form-control required" id="periode_id" name="periode_id">
+                                            <option value="">-Pilih-</option>
+                                            <?php
+                                            if(!empty($periodes))
+                                            {
+                                                foreach ($periodes as $pr)
+                                                {
+                                                    if ($pr->status == 'Aktif') {
+                                                        ?>
+                                                        <option value="<?php echo $pr->idperiode ?>"><?= $pr->idperiode ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

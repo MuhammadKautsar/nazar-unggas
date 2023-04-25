@@ -73,4 +73,13 @@ class DataHarian_model extends CI_Model
         
         return TRUE;
     }
+
+    function getDataPeriodes()
+    {
+        $this->db->select('idperiode, tanggal_mulai, jumlah_doc, status');
+        $this->db->from('periode');
+        $query = $this->db->get();
+        
+        return $query->result();
+    }
 }
