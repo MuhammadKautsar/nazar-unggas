@@ -172,6 +172,34 @@ class Dokumentasi extends BaseController
         $this->session->set_flashdata('success', 'Data berhasil dihapus.');
         redirect($_SERVER['HTTP_REFERER']);
     }
+
+    public function pdf($jenis='pdf')
+    {
+        if($jenis=='pdf'){
+            $searchText = '';
+            if(!empty($this->input->post('searchText'))) {
+                $searchText = $this->security->xss_clean($this->input->post('searchText'));
+            }
+            $data['searchText'] = $searchText;
+            
+            $this->load->library('pagination');
+            
+            // $count = $this->pm->bookingListingCount($searchText);
+
+            // $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
+
+            $returns = $this->paginationCompress ( "dokumentasiListing/", 10 );
+
+            $data['title'] = 'Dokumentasi';
+            $data['records'] = $this->dm->dokumentasiListing($searchText, $returns["page"], $returns["segment"]);
+        
+            // $this->global['pageTitle'] = 'Nazar Unggas : Dokumentasi';
+            
+            $html = $this->load->view("dokumentasi/pdf", $data, TRUE);
+
+            generatePDF($html, 'Dokumentasi');
+        }
+    }
 }
 
 ?>

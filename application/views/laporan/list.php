@@ -9,7 +9,14 @@
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>periode/add"><i class="fa fa-print"></i> Cetak Laporan</a>
+                <?php
+                if($le_vel != 1)
+                {
+                ?>
+                    <a class="btn btn-primary" target="_blank" href="<?php echo base_url(); ?>laporan/pdf"><i class="fa fa-print"></i> Cetak Laporan</a>
+                <?php
+                }
+                ?>
                 </div>
             </div>
         </div>

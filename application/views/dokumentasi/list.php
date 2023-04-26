@@ -14,7 +14,7 @@
                 if($le_vel == 1)
                 {
                 ?>
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>periode/add"><i class="fa fa-print"></i> Cetak Dokumentasi</a>
+                    <a class="btn btn-primary" target="_blank" href="<?php echo base_url(); ?>dokumentasi/pdf"><i class="fa fa-print"></i> Cetak Dokumentasi</a>
                 <?php
                 } else {
                 ?>

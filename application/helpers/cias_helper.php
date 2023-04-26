@@ -1,5 +1,22 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
+use Dompdf\Dompdf;
+
+function generatePDF($html='', $filename='document', $size='A4', $orientation='portrait', $attachment=false)
+{
+    // instantiate and use the dompdf class
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+
+    // (Optional) Setup the paper size and orientation
+    $dompdf->setPaper($size, $orientation);
+
+    // Render the HTML as PDF
+    $dompdf->render();
+
+    // Output the generated PDF to Browser
+    $dompdf->stream($filename, ['Attachment'=>$attachment]);
+}
 
 /**
  * This function is used to print the content of any data

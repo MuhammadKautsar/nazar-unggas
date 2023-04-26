@@ -26,32 +26,25 @@ class Laporan extends BaseController
     
     function laporanListing()
     {
-        // if(!$this->hasListAccess())
-        // {
-        //     $this->loadThis();
-        // }
-        // else
-        // {
-            $searchText = '';
-            if(!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
-            }
-            $data['searchText'] = $searchText;
-            
-            $this->load->library('pagination');
-            
-            // $count = $this->pm->bookingListingCount($searchText);
+        $searchText = '';
+        if(!empty($this->input->post('searchText'))) {
+            $searchText = $this->security->xss_clean($this->input->post('searchText'));
+        }
+        $data['searchText'] = $searchText;
+        
+        $this->load->library('pagination');
+        
+        // $count = $this->pm->bookingListingCount($searchText);
 
-			// $returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
+        // $returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
 
-            $returns = $this->paginationCompress ( "dataHarianListing/", 10 );
-            
-            $data['records'] = $this->dhm->dataHarianListing($searchText, $returns["page"], $returns["segment"]);
-            
-            $this->global['pageTitle'] = 'Nazar Unggas : Periode';
-            
-            $this->loadViews("laporan/list", $this->global, $data, NULL);
-        // }
+        $returns = $this->paginationCompress ( "dataHarianListing/", 10 );
+        
+        $data['records'] = $this->dhm->dataHarianListing($searchText, $returns["page"], $returns["segment"]);
+        
+        $this->global['pageTitle'] = 'Nazar Unggas : Periode';
+        
+        $this->loadViews("laporan/list", $this->global, $data, NULL);
     }
 
     /**
@@ -178,6 +171,34 @@ class Laporan extends BaseController
                 
                 redirect('periode/periodeListing');
             }
+        }
+    }
+
+    public function pdf($jenis='pdf')
+    {
+        if($jenis=='pdf'){
+            $searchText = '';
+            if(!empty($this->input->post('searchText'))) {
+                $searchText = $this->security->xss_clean($this->input->post('searchText'));
+            }
+            $data['searchText'] = $searchText;
+            
+            $this->load->library('pagination');
+            
+            // $count = $this->pm->bookingListingCount($searchText);
+
+            // $returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
+
+            $returns = $this->paginationCompress ( "dataHarianListing/", 10 );
+            
+            $data['title'] = 'Laporan';
+            $data['records'] = $this->dhm->dataHarianListing($searchText, $returns["page"], $returns["segment"]);
+            
+            // $this->global['pageTitle'] = 'Nazar Unggas : Periode';
+            
+            $html = $this->load->view("laporan/pdf", $data, TRUE);
+
+            generatePDF($html, 'Laporan');
         }
     }
 }
