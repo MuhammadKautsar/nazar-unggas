@@ -85,4 +85,41 @@ class Dokumentasi_model extends CI_Model
         
         return $query->result();
     }
+
+    public function get_years()
+    {
+        $this->db->select('YEAR(tgl_panen) as tahun');
+        $this->db->from('dokumentasi');
+        $this->db->group_by('tahun');
+        $this->db->order_by('tahun', 'desc');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_periodes()
+    {
+        $this->db->select('periode_id as periode');
+        $this->db->from('dokumentasi');
+        $this->db->group_by('periode');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function filter_data($tahun = null, $periode = null)
+    {
+        $this->db->select('BaseTbl.iddokumentasi, BaseTbl.jumlah_panen, BaseTbl.tgl_panen, BaseTbl.sisa_pakan, BaseTbl.berat_ayam, BaseTbl.jumlah_biaya, BaseTbl.periode_id,
+        Periode.jumlah_doc, Periode.tanggal_mulai');
+        $this->db->from('dokumentasi as BaseTbl');
+        $this->db->join('periode as Periode', 'Periode.idperiode = BaseTbl.periode_id','left');
+
+        if ($tahun != null) {
+            $this->db->where("YEAR(tgl_panen) = $tahun");
+        }
+        if ($periode != null) {
+            $this->db->where("periode_id = $periode");
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

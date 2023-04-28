@@ -39,167 +39,64 @@ class Laporan extends BaseController
         // $returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
 
         $returns = $this->paginationCompress ( "dataHarianListing/", 10 );
+
+        $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : '';
+        $periode_selected = $this->input->get('periode') ? $this->input->get('periode') : '';
+        $minggu_selected = $this->input->get('minggu') ? $this->input->get('minggu') : '';
         
         $data['records'] = $this->dhm->dataHarianListing($searchText, $returns["page"], $returns["segment"]);
+        $data['tahun'] = $this->dhm->get_years();
+        $data['periode'] = $this->dhm->get_periodes();
+        $data['minggu'] = $this->dhm->get_minggus();
+        $data['tahun_selected'] = $tahun_selected;
+        $data['periode_selected'] = $periode_selected;
+        $data['minggu_selected'] = $minggu_selected;
         
         $this->global['pageTitle'] = 'Nazar Unggas : Periode';
         
         $this->loadViews("laporan/list", $this->global, $data, NULL);
     }
 
-    /**
-     * This function is used to load the add new form
-     */
-    function add()
-    {
-        if(!$this->hasCreateAccess())
-        {
-            $this->loadThis();
-        }
-        else
-        {
-            $this->global['pageTitle'] = 'Nazar Unggas : Tambah Periode Baru';
-
-            $this->loadViews("periode/add", $this->global, NULL, NULL);
-        }
-    }
-    
-    /**
-     * This function is used to add new user to the system
-     */
-    function addNewPeriode()
-    {
-        if(!$this->hasCreateAccess())
-        {
-            $this->loadThis();
-        }
-        else
-        {
-            $this->load->library('form_validation');
-            
-            $this->form_validation->set_rules('tanggal_mulai','Tanggal Mulai','trim|required');
-            $this->form_validation->set_rules('jumlah_doc','Jumlah_doc','trim|required|max_length[5]');
-            
-            if($this->form_validation->run() == FALSE)
-            {
-                $this->add();
-            }
-            else
-            {
-                $tanggal_mulai = $this->security->xss_clean($this->input->post('tanggal_mulai'));
-                $jumlah_doc = $this->security->xss_clean($this->input->post('jumlah_doc'));
-                
-                $periodeInfo = array('tanggal_mulai'=>$tanggal_mulai, 'jumlah_doc'=>$jumlah_doc, 'status'=>'Aktif');
-                
-                $result = $this->pm->addNewPeriode($periodeInfo);
-                
-                if($result > 0) {
-                    $this->session->set_flashdata('success', 'Periode baru sukses dibuat');
-                } else {
-                    $this->session->set_flashdata('error', 'Periode gagal dibuat');
-                }
-                
-                redirect('periode/periodeListing');
-            }
-        }
-    }
-
-    function edit($periodeId = NULL)
-    {
-        if(!$this->hasUpdateAccess())
-        {
-            $this->loadThis();
-        }
-        else
-        {
-            if($periodeId == null)
-            {
-                redirect('periode/periodeListing');
-            }
-            
-            $data['periodeInfo'] = $this->pm->getPeriodeInfo($periodeId);
-
-            $this->global['pageTitle'] = 'Nazar Unggas : Ubah Periode';
-            
-            $this->loadViews("periode/edit", $this->global, $data, NULL);
-        }
-    }
-    
-    
-    /**
-     * This function is used to edit the user information
-     */
-    function editPeriode()
-    {
-        if(!$this->hasUpdateAccess())
-        {
-            $this->loadThis();
-        }
-        else
-        {
-            $this->load->library('form_validation');
-            
-            $periodeId = $this->input->post('idperiode');
-            
-            // $this->form_validation->set_rules('tanggal_mulai','Tanggal Mulai','trim|required');
-            // $this->form_validation->set_rules('jumlah_doc','Jumlah_doc','trim|required|max_length[5]');
-            $this->form_validation->set_rules('status','Status','trim|required');
-            
-            if($this->form_validation->run() == FALSE)
-            {
-                $this->edit($periodeId);
-            }
-            else
-            {
-                // $tanggal_mulai = $this->security->xss_clean($this->input->post('tanggal_mulai'));
-                // $jumlah_doc = $this->security->xss_clean($this->input->post('jumlah_doc'));
-                $status = $this->security->xss_clean($this->input->post('status'));
-                
-                // $periodeInfo = array('tanggal_mulai'=>$tanggal_mulai, 'jumlah_doc'=>$jumlah_doc, 'status'=>$status);
-                $periodeInfo = array('status'=>$status);
-
-                $result = $this->pm->editPeriode($periodeInfo, $periodeId);
-                
-                if($result == true)
-                {
-                    $this->session->set_flashdata('success', 'Periode updated successfully');
-                }
-                else
-                {
-                    $this->session->set_flashdata('error', 'Periode updation failed');
-                }
-                
-                redirect('periode/periodeListing');
-            }
-        }
-    }
-
     public function pdf($jenis='pdf')
     {
-        if($jenis=='pdf'){
-            $searchText = '';
-            if(!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
-            }
-            $data['searchText'] = $searchText;
-            
+        if($jenis=='pdf'){            
             $this->load->library('pagination');
-            
-            // $count = $this->pm->bookingListingCount($searchText);
 
-            // $returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
+            $tahun = $this->input->get('tahun');
+            $periode = $this->input->get('periode');
+            $minggu = $this->input->get('minggu');
 
-            $returns = $this->paginationCompress ( "dataHarianListing/", 10 );
-            
             $data['title'] = 'Laporan';
-            $data['records'] = $this->dhm->dataHarianListing($searchText, $returns["page"], $returns["segment"]);
-            
-            // $this->global['pageTitle'] = 'Nazar Unggas : Periode';
+            $data['records'] = $this->dhm->filter_data($tahun, $periode, $minggu);
+            $data['tahun_selected'] = $tahun;
+            $data['periode_selected'] = $periode;
+            $data['minggu_selected'] = $minggu;
             
             $html = $this->load->view("laporan/pdf", $data, TRUE);
 
             generatePDF($html, 'Laporan');
         }
+    }
+
+    public function filter()
+    {
+        $tahun = $this->input->post('tahun');
+        $periode = $this->input->post('periode');
+        $minggu = $this->input->post('minggu');
+        
+        $data['records'] = $this->dhm->filter_data($tahun, $periode, $minggu);
+        $data['tahun'] = $this->dhm->get_years();
+        $data['periode'] = $this->dhm->get_periodes();
+        $data['minggu'] = $this->dhm->get_minggus();
+        $data['tahun_selected'] = $tahun;
+        $data['periode_selected'] = $periode;
+        $data['minggu_selected'] = $minggu;
+        
+        $this->load->library('pagination');
+
+        $this->global['pageTitle'] = 'Nazar Unggas : Laporan';
+        
+        $this->loadViews("laporan/list", $this->global, $data, NULL);
     }
 }
 

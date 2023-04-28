@@ -14,7 +14,7 @@
                 if($le_vel == 1)
                 {
                 ?>
-                    <a class="btn btn-primary" target="_blank" href="<?php echo base_url(); ?>dokumentasi/pdf"><i class="fa fa-print"></i> Cetak Dokumentasi</a>
+                    <a class="btn btn-primary" target="_blank" href="<?php echo base_url('dokumentasi/pdf') ?>?tahun=<?php echo $tahun_selected ?>&periode=<?php echo $periode_selected ?>"><i class="fa fa-print"></i> Cetak Dokumentasi</a>
                 <?php
                 } else {
                 ?>
@@ -24,6 +24,57 @@
                 ?>
                 </div>
             </div>
+                <?php
+                    if($le_vel == 1)
+                    {
+                ?>
+            <div class="col-xs-12 text-left">
+                <form action="<?php echo base_url(); ?>dokumentasi/filter" method="POST">
+                <div class="col-md-1">
+                        <label for="tahun">Tahun :</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <!-- <label for="tahun">Tahun :</label> -->
+                        <select class="form-control required" id="tahun" name="tahun">
+                            <option value="">-Pilih-</option>
+                            <?php
+                                foreach ($tahun as $row)
+                                {
+                                    ?>
+                                        <option value="<?= $row->tahun ?>" <?= $row->tahun == $tahun_selected ? 'selected' : '' ?>><?= $row->tahun ?></option>
+                                    <?php
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                        <label for="tahun">Periode :</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <!-- <label for="tahun">Periode :</label> -->
+                        <select class="form-control required" id="periode" name="periode">
+                            <option value="">-Pilih-</option>
+                            <?php
+                                foreach ($periode as $rc)
+                                {
+                                    ?>
+                                        <option value="<?= $rc->periode ?>" <?= $rc->periode == $periode_selected ? 'selected' : '' ?>><?= $rc->periode ?></option>
+                                    <?php
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-warning">Filter</button>
+                <a class="btn btn-default" href="<?php echo base_url(); ?>dokumentasi">Reset</a>
+                </form>
+            </div>
+                <?php
+                    }
+                ?>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -61,7 +112,7 @@
               <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">List Dokumentasi</h3>
-                    <div class="box-tools">
+                    <!-- <div class="box-tools">
                         <form action="<?php echo base_url() ?>dokumentasi/dokumentasiListing" method="POST" id="searchList">
                             <div class="input-group">
                               <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
@@ -70,7 +121,7 @@
                               </div>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
@@ -155,7 +206,7 @@
                   
                 </div><!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    <?php echo $this->pagination->create_links(); ?>
+                    <!-- <?php echo $this->pagination->create_links(); ?> -->
                 </div>
               </div><!-- /.box -->
             </div>

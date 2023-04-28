@@ -39,8 +39,15 @@ class Dokumentasi extends BaseController
         // $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
 
         $returns = $this->paginationCompress ( "dokumentasiListing/", 10 );
+
+        $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : '';
+        $periode_selected = $this->input->get('periode') ? $this->input->get('periode') : '';
         
         $data['records'] = $this->dm->dokumentasiListing($searchText, $returns["page"], $returns["segment"]);
+        $data['tahun'] = $this->dm->get_years();
+        $data['periode'] = $this->dm->get_periodes();
+        $data['tahun_selected'] = $tahun_selected;
+        $data['periode_selected'] = $periode_selected;
         
         $this->global['pageTitle'] = 'Nazar Unggas : Dokumentasi';
         
@@ -175,30 +182,39 @@ class Dokumentasi extends BaseController
 
     public function pdf($jenis='pdf')
     {
-        if($jenis=='pdf'){
-            $searchText = '';
-            if(!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
-            }
-            $data['searchText'] = $searchText;
-            
+        if($jenis=='pdf'){            
             $this->load->library('pagination');
-            
-            // $count = $this->pm->bookingListingCount($searchText);
 
-            // $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
-
-            $returns = $this->paginationCompress ( "dokumentasiListing/", 10 );
+            $tahun = $this->input->get('tahun');
+            $periode = $this->input->get('periode');
 
             $data['title'] = 'Dokumentasi';
-            $data['records'] = $this->dm->dokumentasiListing($searchText, $returns["page"], $returns["segment"]);
-        
-            // $this->global['pageTitle'] = 'Nazar Unggas : Dokumentasi';
+            $data['records'] = $this->dm->filter_data($tahun, $periode);
+            $data['tahun_selected'] = $tahun;
+            $data['periode_selected'] = $periode;
             
             $html = $this->load->view("dokumentasi/pdf", $data, TRUE);
 
             generatePDF($html, 'Dokumentasi');
         }
+    }
+
+    public function filter()
+    {
+        $tahun = $this->input->post('tahun');
+        $periode = $this->input->post('periode');
+        
+        $data['records'] = $this->dm->filter_data($tahun, $periode);
+        $data['tahun'] = $this->dm->get_years();
+        $data['periode'] = $this->dm->get_periodes();
+        $data['tahun_selected'] = $tahun;
+        $data['periode_selected'] = $periode;
+        
+        $this->load->library('pagination');
+
+        $this->global['pageTitle'] = 'Nazar Unggas : Dokumentasi';
+        
+        $this->loadViews("dokumentasi/list", $this->global, $data, NULL);
     }
 }
 

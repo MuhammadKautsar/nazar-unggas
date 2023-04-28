@@ -82,4 +82,51 @@ class DataHarian_model extends CI_Model
         
         return $query->result();
     }
+
+    public function get_years()
+    {
+        $this->db->select('YEAR(tanggal) as tahun');
+        $this->db->from('data_harian');
+        $this->db->group_by('tahun');
+        $this->db->order_by('tahun', 'desc');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_periodes()
+    {
+        $this->db->select('periode_id as periode');
+        $this->db->from('data_harian');
+        $this->db->group_by('periode');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_minggus()
+    {
+        $this->db->select('minggu_ke as minggu');
+        $this->db->from('data_harian');
+        $this->db->group_by('minggu');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function filter_data($tahun = null, $periode = null, $minggu = null)
+    {
+        $this->db->select('*');
+        $this->db->from('data_harian');
+
+        if ($tahun != null) {
+            $this->db->where("YEAR(tanggal) = $tahun");
+        }
+        if ($periode != null) {
+            $this->db->where("periode_id = $periode");
+        }
+        if ($minggu != null) {
+            $this->db->where("minggu_ke = $minggu");
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
