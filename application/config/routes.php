@@ -91,5 +91,16 @@ $route['dataHarian/delete/(:num)'] = 'DataHarian/delete/$1';
 $route['biayaOperasional/delete/(:num)'] = 'BiayaOperasional/delete/$1';
 $route['dokumentasi/delete/(:num)'] = 'Dokumentasi/delete/$1';
 
+$route['dataHarianListing'] = "dataHarian/dataHarianListing";
+$route['dataHarianListing/(:num)'] = "dataHarian/dataHarianListing/$1";
+$route['biayaOperasionalListing'] = "biayaOperasional/biayaOperasionalListing";
+$route['biayaOperasionalListing/(:num)'] = "biayaOperasional/biayaOperasionalListing/$1";
+$route['dokumentasiListing'] = "dokumentasi/dokumentasiListing";
+$route['dokumentasiListing/(:num)'] = "dokumentasi/dokumentasiListing/$1";
+$route['laporanListing'] = "laporan/laporanListing";
+$route['laporanListing/(:num)'] = "laporan/laporanListing/$1";
+$route['periodeListing'] = "periode/periodeListing";
+$route['periodeListing/(:num)'] = "periode/periodeListing/$1";
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -114,7 +114,7 @@
             {
             ?>
             <li>
-              <a href="<?php echo base_url(); ?>userListing">
+              <a href="<?php echo base_url(); ?>user/userListing">
                 <i class="fa fa-user"></i>
                 <span>Manajer</span>
               </a>

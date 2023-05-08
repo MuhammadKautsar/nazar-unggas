@@ -34,11 +34,9 @@ class Periode extends BaseController
             
         $this->load->library('pagination');
             
-        // $count = $this->pm->bookingListingCount($searchText);
+        $count = $this->pm->periodeListingCount($searchText);
 
-		// $returns = $this->paginationCompress ( "periodeListing/", $count, 10 );
-
-        $returns = $this->paginationCompress ( "periodeListing/", 10 );
+		$returns = $this->paginationCompress ( "periodeListing/", $count, 10 );
             
         $data['records'] = $this->pm->periodeListing($searchText, $returns["page"], $returns["segment"]);
             

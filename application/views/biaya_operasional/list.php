@@ -79,7 +79,7 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo $i++; ?></td>
+                        <td><?php echo $record->idbiaya ?></td>
                         <td><?php echo $record->tanggal ?></td>
                         <td><?php echo $record->nama_kebutuhan ?></td>
                         <td><?php echo $record->harga ?></td>
@@ -111,7 +111,7 @@
             e.preventDefault();            
             var link = jQuery(this).get(0).href;            
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "booking/bookingListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "biayaOperasionalListing/0" + value);
             jQuery("#searchList").submit();
         });
     });

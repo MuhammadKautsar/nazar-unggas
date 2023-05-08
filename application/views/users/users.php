@@ -76,6 +76,8 @@
                     {
                         foreach($userRecords as $record)
                         {
+                            if($record->level == 2)
+                            {
                     ?>
                     <tr>
                         <td><?php echo $i++; ?></td>
@@ -88,6 +90,7 @@
                         </td>
                     </tr>
                     <?php
+                            }
                         }
                     }
                     ?>
@@ -109,7 +112,7 @@
             e.preventDefault();            
             var link = jQuery(this).get(0).href;            
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "userListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "userListing/0" + value);
             jQuery("#searchList").submit();
         });
     });

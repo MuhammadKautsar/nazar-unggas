@@ -6,12 +6,14 @@ class BiayaOperasional_model extends CI_Model
      * @param string $searchText : This is optional search text
      * @return number $count : This is row count
      */
-    function bookingListingCount($searchText)
+    function biayaOperasionalListingCount($searchText)
     {
-        $this->db->select('BaseTbl.bookingId, BaseTbl.roomName, BaseTbl.description, BaseTbl.createdDtm');
-        $this->db->from('data_harian as BaseTbl');
+        $this->db->select('BaseTbl.idbiaya, BaseTbl.tanggal, BaseTbl.kebutuhan_id, BaseTbl.harga, BaseTbl.periode_id,
+        Kebutuhan.nama_kebutuhan');
+        $this->db->from('biaya_operasional as BaseTbl');
+        $this->db->join('kebutuhan as Kebutuhan', 'Kebutuhan.idkebutuhan = BaseTbl.kebutuhan_id','left');
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.roomName LIKE '%".$searchText."%')";
+            $likeCriteria = "(BaseTbl.harga LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
         $query = $this->db->get();
@@ -35,7 +37,7 @@ class BiayaOperasional_model extends CI_Model
             $likeCriteria = "(BaseTbl.harga LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
-        $this->db->order_by('BaseTbl.idbiaya', 'DESC');
+        // $this->db->order_by('BaseTbl.idbiaya', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
         

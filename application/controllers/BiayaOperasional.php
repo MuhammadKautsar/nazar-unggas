@@ -34,15 +34,13 @@ class BiayaOperasional extends BaseController
         
         $this->load->library('pagination');
         
-        // $count = $this->pm->bookingListingCount($searchText);
+        $count = $this->bom->biayaOperasionalListingCount($searchText);
 
-        // $returns = $this->paginationCompress ( "biayaOperasionalListing/", $count, 10 );
-
-        $returns = $this->paginationCompress ( "biayaOperasionalListing/", 10 );
+        $returns = $this->paginationCompress ( "biayaOperasionalListing/", $count, 10 );
         
         $data['records'] = $this->bom->biayaOperasionalListing($searchText, $returns["page"], $returns["segment"]);
         
-        $this->global['pageTitle'] = 'Nazar Unggas : Periode';
+        $this->global['pageTitle'] = 'Nazar Unggas : Biaya Operasional';
         
         $this->loadViews("biaya_operasional/list", $this->global, $data, NULL);
     }

@@ -34,11 +34,9 @@ class Laporan extends BaseController
         
         $this->load->library('pagination');
         
-        // $count = $this->pm->bookingListingCount($searchText);
+        $count = $this->dhm->dataHarianListingCount($searchText);
 
-        // $returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
-
-        $returns = $this->paginationCompress ( "dataHarianListing/", 10 );
+		$returns = $this->paginationCompress ( "laporanListing/", $count, 10 );
 
         $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : '';
         $periode_selected = $this->input->get('periode') ? $this->input->get('periode') : '';
@@ -52,26 +50,38 @@ class Laporan extends BaseController
         $data['periode_selected'] = $periode_selected;
         $data['minggu_selected'] = $minggu_selected;
         
-        $this->global['pageTitle'] = 'Nazar Unggas : Periode';
+        $this->global['pageTitle'] = 'Nazar Unggas : Laporan';
         
         $this->loadViews("laporan/list", $this->global, $data, NULL);
     }
 
-    public function pdf($jenis='pdf')
-    {
-        if($jenis=='pdf'){            
-            $this->load->library('pagination');
+    public function pdf($dataHarianId = NULL)
+    {          
+        $this->load->library('pagination');
 
-            $tahun = $this->input->get('tahun');
-            $periode = $this->input->get('periode');
-            $minggu = $this->input->get('minggu');
+        $tahun = $this->input->get('tahun');
+        $periode = $this->input->get('periode');
+        $minggu = $this->input->get('minggu');
+        // $dataHarianId = $this->input->get('iddata');
 
+        if(!empty($dataHarianId)){
+            // Load data for a single row using the ID
+            $data['title'] = 'Laporan';
+            $data['record'] = $this->dhm->getDataHarianInfo($dataHarianId);
+            
+            $html = $this->load->view("laporan/pdf_single", $data, TRUE);
+
+            // Set the filename as the ID of the record
+            $filename = 'Laporan-'. $dataHarianId . '.pdf';
+            generatePDF($html, $filename);
+        } else {
+            // Load data for all rows based on the filter
             $data['title'] = 'Laporan';
             $data['records'] = $this->dhm->filter_data($tahun, $periode, $minggu);
             $data['tahun_selected'] = $tahun;
             $data['periode_selected'] = $periode;
             $data['minggu_selected'] = $minggu;
-            
+
             $html = $this->load->view("laporan/pdf", $data, TRUE);
 
             generatePDF($html, 'Laporan');
@@ -80,6 +90,12 @@ class Laporan extends BaseController
 
     public function filter()
     {
+        $searchText = '';
+        if(!empty($this->input->post('searchText'))) {
+            $searchText = $this->security->xss_clean($this->input->post('searchText'));
+        }
+        $data['searchText'] = $searchText;
+        
         $tahun = $this->input->post('tahun');
         $periode = $this->input->post('periode');
         $minggu = $this->input->post('minggu');

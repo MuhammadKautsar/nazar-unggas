@@ -34,11 +34,9 @@ class DataHarian extends BaseController
             
         $this->load->library('pagination');
             
-        // $count = $this->pm->bookingListingCount($searchText);
+        $count = $this->dhm->dataHarianListingCount($searchText);
 
-		// $returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
-
-        $returns = $this->paginationCompress ( "dataHarianListing/", 10 );
+		$returns = $this->paginationCompress ( "dataHarianListing/", $count, 10 );
             
         $data['records'] = $this->dhm->dataHarianListing($searchText, $returns["page"], $returns["segment"]);
             

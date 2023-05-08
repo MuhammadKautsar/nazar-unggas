@@ -112,7 +112,7 @@
               <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">List Dokumentasi</h3>
-                    <!-- <div class="box-tools">
+                    <div class="box-tools">
                         <form action="<?php echo base_url() ?>dokumentasi/dokumentasiListing" method="POST" id="searchList">
                             <div class="input-group">
                               <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
@@ -121,7 +121,7 @@
                               </div>
                             </div>
                         </form>
-                    </div> -->
+                    </div>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
@@ -169,7 +169,7 @@
                         if($le_vel == 1)
                         {
                         ?>
-                        <td class="text-center"><?php echo $i++; ?></td>
+                        <td class="text-center"><?php echo $record->iddokumentasi ?></td>
                         <td class="text-center"><?php echo $record->jumlah_doc ?></td>
                         <td class="text-center"><?php echo $record->jumlah_panen ?></td>
                         <td class="text-center"><?php echo $record->tanggal_mulai ?></td>
@@ -181,7 +181,7 @@
                         <?php
                         } else {
                         ?>
-                        <td class="text-center"><?php echo $i++; ?></td>
+                        <td class="text-center"><?php echo $record->iddokumentasi ?></td>
                         <td class="text-center"><?php echo $record->periode_id ?></td>
                         <td class="text-center"><?php echo $record->jumlah_doc ?></td>
                         <td class="text-center"><?php echo $record->jumlah_panen ?></td>
@@ -206,7 +206,7 @@
                   
                 </div><!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    <!-- <?php echo $this->pagination->create_links(); ?> -->
+                    <?php echo $this->pagination->create_links(); ?>
                 </div>
               </div><!-- /.box -->
             </div>
@@ -220,7 +220,7 @@
             e.preventDefault();            
             var link = jQuery(this).get(0).href;            
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "booking/bookingListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "dokumentasiListing/0" + value);
             jQuery("#searchList").submit();
         });
     });

@@ -34,11 +34,9 @@ class Dokumentasi extends BaseController
         
         $this->load->library('pagination');
         
-        // $count = $this->pm->bookingListingCount($searchText);
+        $count = $this->dm->dokumentasiListingCount($searchText);
 
-        // $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
-
-        $returns = $this->paginationCompress ( "dokumentasiListing/", 10 );
+        $returns = $this->paginationCompress ( "dokumentasiListing/", $count, 10 );
 
         $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : '';
         $periode_selected = $this->input->get('periode') ? $this->input->get('periode') : '';
@@ -201,6 +199,12 @@ class Dokumentasi extends BaseController
 
     public function filter()
     {
+        $searchText = '';
+        if(!empty($this->input->post('searchText'))) {
+            $searchText = $this->security->xss_clean($this->input->post('searchText'));
+        }
+        $data['searchText'] = $searchText;
+
         $tahun = $this->input->post('tahun');
         $periode = $this->input->post('periode');
         

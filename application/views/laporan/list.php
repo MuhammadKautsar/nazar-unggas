@@ -129,7 +129,7 @@
               <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">List Laporan</h3>
-                    <!-- <div class="box-tools">
+                    <div class="box-tools">
                         <form action="<?php echo base_url() ?>periode/periodeListing" method="POST" id="searchList">
                             <div class="input-group">
                               <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
@@ -138,7 +138,7 @@
                               </div>
                             </div>
                         </form>
-                    </div> -->
+                    </div>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
@@ -149,8 +149,17 @@
                         <th>Ayam mati</th>
                         <th>Ayam afkir</th>
                         <th>Pakan (sak)</th>
+                        <th>Jumlah</th>
                         <th>Berat ayam</th>
                         <th>Periode</th>
+                        <?php
+                            if($le_vel != 1)
+                            {
+                        ?>
+                        <th>Aksi</th>
+                        <?php
+                            }
+                        ?>
                     </tr>
                     <?php $i = 1; ?>
                     <?php
@@ -160,14 +169,25 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo $i++; ?></td>
+                        <td><?php echo $record->iddata ?></td>
                         <td><?php echo $record->tanggal ?></td>
                         <td><?php echo $record->umur ?></td>
                         <td><?php echo $record->ayam_mati ?></td>
                         <td><?php echo $record->afkir ?></td>
                         <td><?php echo $record->pakan ?></td>
+                        <td><?php echo $record->ayam_mati + $record->afkir + $record->pakan ?></td>
                         <td><?php echo $record->berat_ayam ?></td>
                         <td><?php echo $record->periode_id ?></td>
+                        <?php
+                            if($le_vel != 1)
+                            {
+                        ?>
+                        <td>
+                            <a class="btn btn-sm btn-info" target="_blank" href="<?php echo base_url().'laporan/pdf/'.$record->iddata; ?>" title="Cetak"><i class="fa fa-print"></i></a>
+                        </td>
+                        <?php
+                            }
+                        ?>
                     </tr>
                     <?php
                         }
@@ -177,7 +197,7 @@
                   
                 </div><!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    <!-- <?php echo $this->pagination->create_links(); ?> -->
+                    <?php echo $this->pagination->create_links(); ?>
                 </div>
               </div><!-- /.box -->
             </div>
@@ -191,7 +211,7 @@
             e.preventDefault();            
             var link = jQuery(this).get(0).href;            
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "booking/bookingListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "laporanListing/0" + value);
             jQuery("#searchList").submit();
         });
     });

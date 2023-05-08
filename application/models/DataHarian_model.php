@@ -6,12 +6,12 @@ class DataHarian_model extends CI_Model
      * @param string $searchText : This is optional search text
      * @return number $count : This is row count
      */
-    function bookingListingCount($searchText)
+    function dataHarianListingCount($searchText)
     {
-        $this->db->select('BaseTbl.bookingId, BaseTbl.roomName, BaseTbl.description, BaseTbl.createdDtm');
+        $this->db->select('BaseTbl.iddata, BaseTbl.minggu_ke, BaseTbl.tanggal, BaseTbl.umur, BaseTbl.ayam_mati, BaseTbl.afkir, BaseTbl.pakan, BaseTbl.berat_ayam, BaseTbl.periode_id');
         $this->db->from('data_harian as BaseTbl');
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.roomName LIKE '%".$searchText."%')";
+            $likeCriteria = "(BaseTbl.status LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
         $query = $this->db->get();

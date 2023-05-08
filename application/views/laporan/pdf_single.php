@@ -46,10 +46,8 @@
         </tr>
         <?php $i = 1; ?>
         <?php
-        if(!empty($records))
+        if(!empty($record))
         {
-            foreach($records as $record)
-            {
         ?>
         <tr>
             <td><?php echo $record->iddata ?></td>
@@ -63,7 +61,6 @@
             <td><?php echo $record->periode_id ?></td>
         </tr>
         <?php
-            }
         }
         ?>
     </table>

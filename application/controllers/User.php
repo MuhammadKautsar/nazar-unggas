@@ -19,16 +19,6 @@ class User extends BaseController
     }
     
     /**
-     * This function used to load the first screen of the user
-     */
-    public function index()
-    {
-        // $this->global['pageTitle'] = 'Nazar Unggas : Dashboard';
-        
-        // $this->loadViews("general/dashboard", $this->global, NULL , NULL);
-    }
-    
-    /**
      * This function is used to load the user list
      */
     function userListing()
@@ -105,7 +95,6 @@ class User extends BaseController
             $username = strtolower($this->security->xss_clean($this->input->post('username')));
             $password = $this->input->post('password');
             $phone = $this->security->xss_clean($this->input->post('phone'));
-            // $isAdmin = $this->input->post('isAdmin');
             $level = 2;
             
             $userInfo = array('username'=>$username, 'password'=>getHashedPassword($password),

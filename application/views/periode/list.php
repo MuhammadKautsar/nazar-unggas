@@ -79,7 +79,7 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo $i++; ?></td>
+                        <td><?php echo $record->idperiode ?></td>
                         <td>000<?php echo $record->idperiode ?></td>
                         <td><?php echo $record->tanggal_mulai ?></td>
                         <td><?php echo $record->jumlah_doc ?></td>
@@ -117,7 +117,7 @@
             e.preventDefault();            
             var link = jQuery(this).get(0).href;            
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "periode/periodeListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "periodeListing/0" + value);
             jQuery("#searchList").submit();
         });
     });

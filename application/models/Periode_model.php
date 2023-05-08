@@ -11,7 +11,7 @@ class Periode_model extends CI_Model
         $this->db->select('BaseTbl.idperiode, BaseTbl.tanggal_mulai, BaseTbl.jumlah_doc, BaseTbl.status');
         $this->db->from('periode as BaseTbl');
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.roomName LIKE '%".$searchText."%')";
+            $likeCriteria = "(BaseTbl.status LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
         $query = $this->db->get();
