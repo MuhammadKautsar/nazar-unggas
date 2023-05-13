@@ -178,14 +178,25 @@ class Dokumentasi extends BaseController
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function pdf($jenis='pdf')
+    public function pdf($dokumentasiId = NULL)
     {
-        if($jenis=='pdf'){            
-            $this->load->library('pagination');
+        $this->load->library('pagination');
 
-            $tahun = $this->input->get('tahun');
-            $periode = $this->input->get('periode');
+        $tahun = $this->input->get('tahun');
+        $periode = $this->input->get('periode');
 
+        if(!empty($dokumentasiId)){
+            // Load data for a single row using the ID
+            $data['title'] = 'Dokumentasi';
+            $data['record'] = $this->dm->getDokumentasiInfo($dokumentasiId);
+            
+            $html = $this->load->view("dokumentasi/pdf_single", $data, TRUE);
+
+            // Set the filename as the ID of the record
+            $filename = 'Dokumentasi-'. $dokumentasiId . '.pdf';
+            generatePDF($html, $filename);
+        } else {
+            // Load data for all rows based on the filter
             $data['title'] = 'Dokumentasi';
             $data['records'] = $this->dm->filter_data($tahun, $periode);
             $data['tahun_selected'] = $tahun;

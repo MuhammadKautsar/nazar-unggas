@@ -40,11 +40,14 @@
             <th>Ayam mati</th>
             <th>Ayam afkir</th>
             <th>Pakan (sak)</th>
-            <th>Jumlah</th>
             <th>Berat ayam</th>
             <th>Periode</th>
         </tr>
-        <?php $i = 1; ?>
+        <?php 
+            $total_ayam_mati = 0;
+            $total_afkir = 0;
+            $total_pakan = 0;
+        ?>
         <?php
         if(!empty($records))
         {
@@ -58,14 +61,23 @@
             <td><?php echo $record->ayam_mati ?></td>
             <td><?php echo $record->afkir ?></td>
             <td><?php echo $record->pakan ?></td>
-            <td><?php echo $record->ayam_mati + $record->afkir + $record->pakan ?></td>
             <td><?php echo $record->berat_ayam ?></td>
             <td><?php echo $record->periode_id ?></td>
         </tr>
         <?php
+            $total_ayam_mati += $record->ayam_mati;
+            $total_afkir += $record->afkir;
+            $total_pakan += $record->pakan;
             }
         }
         ?>
+        <tr>
+            <th colspan="3" class="text-center">Jumlah</th>
+            <th><?php echo $total_ayam_mati; ?></th>
+            <th><?php echo $total_afkir; ?></th>
+            <th><?php echo $total_pakan; ?></th>
+            <th colspan="3"></th>
+        </tr>
     </table>
 
 </body>

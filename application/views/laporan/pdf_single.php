@@ -40,7 +40,6 @@
             <th>Ayam mati</th>
             <th>Ayam afkir</th>
             <th>Pakan (sak)</th>
-            <th>Jumlah</th>
             <th>Berat ayam</th>
             <th>Periode</th>
         </tr>
@@ -56,7 +55,6 @@
             <td><?php echo $record->ayam_mati ?></td>
             <td><?php echo $record->afkir ?></td>
             <td><?php echo $record->pakan ?></td>
-            <td><?php echo $record->ayam_mati + $record->afkir + $record->pakan ?></td>
             <td><?php echo $record->berat_ayam ?></td>
             <td><?php echo $record->periode_id ?></td>
         </tr>

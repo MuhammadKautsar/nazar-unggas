@@ -62,7 +62,6 @@ class Laporan extends BaseController
         $tahun = $this->input->get('tahun');
         $periode = $this->input->get('periode');
         $minggu = $this->input->get('minggu');
-        // $dataHarianId = $this->input->get('iddata');
 
         if(!empty($dataHarianId)){
             // Load data for a single row using the ID

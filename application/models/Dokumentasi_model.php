@@ -60,8 +60,10 @@ class Dokumentasi_model extends CI_Model
     
     function getDokumentasiInfo($dokumentasiId)
     {
-        $this->db->select('iddokumentasi, jumlah_panen, tgl_panen, sisa_pakan, berat_ayam, jumlah_biaya, periode_id');
-        $this->db->from('dokumentasi');
+        $this->db->select('BaseTbl.iddokumentasi, BaseTbl.jumlah_panen, BaseTbl.tgl_panen, BaseTbl.sisa_pakan, BaseTbl.berat_ayam, BaseTbl.jumlah_biaya, BaseTbl.periode_id,
+        Periode.jumlah_doc, Periode.tanggal_mulai');
+        $this->db->from('dokumentasi as BaseTbl');
+        $this->db->join('periode as Periode', 'Periode.idperiode = BaseTbl.periode_id','left');
         $this->db->where('iddokumentasi', $dokumentasiId);
         $query = $this->db->get();
         

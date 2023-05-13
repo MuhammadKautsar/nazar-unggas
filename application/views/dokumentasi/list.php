@@ -139,6 +139,7 @@
                         <th class="text-center">Berat ayam</th>
                         <th class="text-center">Periode</th>
                         <th class="text-center">Biaya operasional</th>
+                        <th class="text-center">Aksi</th>
                     <?php
                     } else {
                     ?>
@@ -178,6 +179,9 @@
                         <td class="text-center"><?php echo $record->berat_ayam ?></td>
                         <td class="text-center"><?php echo $record->periode_id ?></td>
                         <td class="text-center">Rp <?php echo $record->jumlah_biaya ?></td>
+                        <td>
+                            <a class="btn btn-sm btn-info" target="_blank" href="<?php echo base_url().'dokumentasi/pdf/'.$record->iddokumentasi; ?>" title="Cetak"><i class="fa fa-print"></i></a>
+                        </td>
                         <?php
                         } else {
                         ?>
