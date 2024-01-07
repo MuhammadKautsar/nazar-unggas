@@ -85,7 +85,7 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3><?php echo $total_biaya_operasional; ?></h3>
+                  <h3>Rp.<?php echo $total_biaya_operasional; ?></h3>
                   <p>Biaya Operasional</p>
                 </div>
                 <div class="icon">

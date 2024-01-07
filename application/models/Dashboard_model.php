@@ -37,9 +37,13 @@ class Dashboard_model extends CI_Model
 
     public function get_total_biaya_operasional()
     {
-        $query = $this->db->get('biaya_operasional');
-        $total_biaya_operasional = $query->num_rows();
+        $this->db->select('SUM(harga) as total_biaya');
+        $this->db->from('biaya_operasional');
+        $this->db->join('periode', 'periode.idperiode = biaya_operasional.periode_id');
+        $this->db->where('periode.status', 'Aktif');
+        $query = $this->db->get();
 
-        return $total_biaya_operasional;
+        $result = $query->row();
+        return $result->total_biaya;
     }
 }

@@ -146,13 +146,19 @@ class Periode extends BaseController
 
     public function delete($id)
     {
-        // Hapus data dari database
+        // Lakukan penghapusan data berdasarkan id
         $this->db->where('idperiode', $id);
         $this->db->delete('periode');
 
-        // Tampilkan pesan berhasil dihapus dan kembali ke halaman sebelumnya
-        $this->session->set_flashdata('success', 'Data berhasil dihapus.');
-        redirect($_SERVER['HTTP_REFERER']);
+        if ($this->db->affected_rows() > 0) {
+            // Data berhasil dihapus
+            $this->session->set_flashdata('success', 'Data berhasil dihapus.');
+            redirect('periodeListing');
+        } else {
+            // Tidak ada data yang dihapus
+            $this->session->set_flashdata('error', 'Data tidak berhasil dihapus karena sudah memiliki relasi.');
+            redirect('periodeListing');
+        }
     }
 }
 
